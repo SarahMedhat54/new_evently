@@ -1,14 +1,13 @@
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
-import 'package:evently_c17/ui/utils/app_routes.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/widgets/app_text_field.dart';
 import 'package:evently_c17/ui/widgets/evently_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({super.key});
+class RegisterScreen extends StatelessWidget {
+  const RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +22,15 @@ class LoginScreen extends StatelessWidget {
               Image.asset(AppAssets.appLogo),
               SizedBox(height: 48),
               Text(
-                "Login to your account",
+                "Create your account",
                 style: AppTextStyles.blue24SemiBold,
               ),
               SizedBox(height: 24),
+              AppTextField(
+                hint: "Enter your name",
+                prefixIcon: SvgPicture.asset(AppAssets.icPersonSvg),
+              ),
+              SizedBox(height: 16),
               AppTextField(
                 hint: "Enter your email",
                 prefixIcon: SvgPicture.asset(AppAssets.icEmailSvg),
@@ -37,30 +41,28 @@ class LoginScreen extends StatelessWidget {
                 suffixIcon: SvgPicture.asset(AppAssets.icEyeClosedSvg),
                 prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
               ),
-              SizedBox(height: 8),
-              Text(
-                "Forgot password?",
-                textAlign: TextAlign.end,
-                style: AppTextStyles.blue14SemiBold.copyWith(
-                  decoration: TextDecoration.underline,
-                ),
+              SizedBox(height: 16),
+              AppTextField(
+                hint: "Confirm your password",
+                suffixIcon: SvgPicture.asset(AppAssets.icEyeClosedSvg),
+                prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
               ),
               SizedBox(height: 48),
-              EventlyButton(text: "Login", onPress: () {}),
+              EventlyButton(text: "Register", onPress: () {}),
               SizedBox(height: 48),
               InkWell(
-                onTap: () {
-                  Navigator.push(context, AppRoutes.register);
+                onTap: (){
+                  Navigator.pop(context);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Dont have an account?  ",
+                      "Already have an account?  ",
                       style: AppTextStyles.grey14Regular,
                     ),
                     Text(
-                      "Sign up",
+                      "Login",
                       style: AppTextStyles.blue14SemiBold.copyWith(
                         decoration: TextDecoration.underline,
                       ),
@@ -76,7 +78,7 @@ class LoginScreen extends StatelessWidget {
               ),
               SizedBox(height: 32),
               EventlyButton(
-                text: "Login with Google",
+                text: "Sign up with Google",
                 onPress: () {},
                 backgroundColor: AppColors.white,
                 textStyle: AppTextStyles.blue18Medium,

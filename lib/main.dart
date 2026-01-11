@@ -1,4 +1,6 @@
 import 'package:evently_c17/ui/screens/login/login_screen.dart';
+import 'package:evently_c17/ui/screens/navigation/navigation_screen.dart';
+import 'package:evently_c17/ui/screens/register/register_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +14,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: LoginScreen(),
+      home: NavigationScreen(),
     );
   }
 }
