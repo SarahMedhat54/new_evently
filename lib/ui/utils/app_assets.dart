@@ -20,4 +20,5 @@ class AppAssets {
   static const String icBirthdaySvg = "assets/images/ic_bitrhday.svg";
   static const String icCalendarSvg = "assets/images/ic_calendar.svg";
   static const String appLogo = "assets/images/app_logo.png";
+  static const String icEyeClosedSvg = "assets/images/ic_eye_closed.svg";
 }
