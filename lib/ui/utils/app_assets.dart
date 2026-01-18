@@ -1,4 +1,4 @@
-class AppAssets {
+abstract class AppAssets {
   static const String sportDark = "assets/images/Sport.png";
   static const String sportLight = "assets/images/Sport-1.png";
   static const String meetingDark = "assets/images/Meeting.png";

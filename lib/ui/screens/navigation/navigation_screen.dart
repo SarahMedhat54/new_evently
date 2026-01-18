@@ -13,17 +13,22 @@ class NavigationScreen extends StatefulWidget {
 
 class _NavigationScreenState extends State<NavigationScreen> {
   var selectedIndex = 0;
-  List<Widget> tabs = [
-    HomeTab(),
-    FavoriteTab(),
-    ProfileTab()
-  ];
+  List<Widget> tabs = [HomeTab(), FavoriteTab(), ProfileTab()];
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.offWhite,
-      body: tabs[selectedIndex],
-      bottomNavigationBar: buildBottomNavigation(),
+    return SafeArea(
+      child: Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {},
+          shape: CircleBorder(),
+          backgroundColor: AppColors.blue,
+          child: Icon(Icons.add, color: AppColors.white,),
+        ),
+        backgroundColor: AppColors.offWhite,
+        body: tabs[selectedIndex],
+        bottomNavigationBar: buildBottomNavigation(),
+      ),
     );
   }
 
@@ -33,7 +38,7 @@ class _NavigationScreenState extends State<NavigationScreen> {
       selectedItemColor: AppColors.blue,
       unselectedItemColor: AppColors.grey2,
       currentIndex: selectedIndex,
-      onTap: (newIndex){
+      onTap: (newIndex) {
         selectedIndex = newIndex;
         setState(() {});
       },

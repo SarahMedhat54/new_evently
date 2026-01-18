@@ -40,6 +40,9 @@ class AppTextField extends StatelessWidget {
           minWidth: 24,
         ),
       ),
+      onChanged: (text){
+        print("text");
+      },
       obscureText: isPassword,
     );
   }
