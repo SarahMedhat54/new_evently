@@ -44,7 +44,7 @@ class RegisterScreen extends StatelessWidget {
                 isPassword: true,
               ),
               SizedBox(height: 48),
-              EventlyButton(text: "Register", onClick: () {}),
+              EventlyButton(text: "Register", onPress: () {}),
               SizedBox(height: 48),
               InkWell(
                 onTap: () {
@@ -77,8 +77,7 @@ class RegisterScreen extends StatelessWidget {
               SizedBox(height: 24),
               EventlyButton(
                 text: "Login with google",
-                onClick: () {},
-                textColor: AppColors.blue,
+                onPress: () {},
                 backgroundColor: AppColors.white,
                 icon: Icon(Icons.mail, color: AppColors.blue),
               ),
