@@ -43,12 +43,12 @@ class EventWidget extends StatelessWidget {
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: AppColors.blue,
+          color: AppColors.offWhite,
         ),
         child: Text(
           "${eventDM.dateTime.day} Jan",
           textAlign: TextAlign.start,
-          style: AppTextStyles.white18Medium,
+          style: AppTextStyles.blue14SemiBold,
         ),
       ),
     );
@@ -56,8 +56,9 @@ class EventWidget extends StatelessWidget {
 
   buildTitleContainer() => Container(
     padding: EdgeInsets.all(8),
+    margin: EdgeInsets.all(8),
     decoration: BoxDecoration(
-      color: AppColors.blue,
+      color: AppColors.offWhite,
       borderRadius: BorderRadius.circular(8),
     ),
     child: Row(
@@ -66,12 +67,12 @@ class EventWidget extends StatelessWidget {
         Expanded(
           child: Text(
             eventDM.title,
-            style: AppTextStyles.white18Medium,
+            style: AppTextStyles.blue14SemiBold,
             maxLines: 2,
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        Icon(eventDM.isFavorite ? Icons.favorite : Icons.favorite_border, color: AppColors.white,),
+        Icon(eventDM.isFavorite ? Icons.favorite : Icons.favorite_border, color: AppColors.blue,),
       ],
     ),
   );

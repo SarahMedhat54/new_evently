@@ -36,6 +36,7 @@ class _CategoriesTabBarState extends State<CategoriesTabBar> {
           widget.onChanged(widget.categories[index]);
           setState(() {});
         },
+        dividerColor: Colors.transparent,
         tabs: widget.categories.map(mapCategoryToWidget).toList(),
       ),
     );

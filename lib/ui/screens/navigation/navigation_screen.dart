@@ -2,6 +2,7 @@ import 'package:evently_c17/ui/screens/navigation/tabs/favorites/favorites_tab.d
 import 'package:evently_c17/ui/screens/navigation/tabs/home/home_tab.dart';
 import 'package:evently_c17/ui/screens/navigation/tabs/settings/settings_tab.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
+import 'package:evently_c17/ui/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -16,16 +17,20 @@ class _NavigationScreenState extends State<NavigationScreen> {
   var tabs = [HomeTab(), FavoritesTab(), SettingsTab()];
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: AppColors.offWhite,
-      body: tabs[selectedIndex],
-      floatingActionButton: buildFAB(),
-      bottomNavigationBar: buildBottomNavigation(),
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.offWhite,
+        body: tabs[selectedIndex],
+        floatingActionButton: buildFAB(),
+        bottomNavigationBar: buildBottomNavigation(),
+      ),
     );
   }
 
   buildFAB() => FloatingActionButton(
-    onPressed: () {},
+    onPressed: () {
+      Navigator.push(context, AppRoutes.addEvent);
+    },
     backgroundColor: AppColors.blue,
     shape: CircleBorder(),
     child: Icon(Icons.add, color: Colors.white),
