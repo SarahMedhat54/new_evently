@@ -1,5 +1,6 @@
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
+import 'package:evently_c17/ui/utils/app_dialogs.dart';
 import 'package:evently_c17/ui/utils/app_routes.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/widgets/app_text_field.dart';
@@ -7,9 +8,14 @@ import 'package:evently_c17/ui/widgets/evently_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -46,7 +52,7 @@ class LoginScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 48),
-              EventlyButton(text: "Login", onPress: () {}),
+              buildLoginButton(),
               SizedBox(height: 48),
               InkWell(
                 onTap: () {
@@ -88,4 +94,19 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  EventlyButton buildLoginButton() => EventlyButton(
+    text: "Login",
+    onPress: () async {
+      showLoading(context);
+      await Future.delayed(Duration(seconds: 1));
+      Navigator.pop(context);
+      showMessage(
+        context,
+        "Please try again later",
+        posText: "ok",
+        onPosClick: () {},
+      );
+    },
+  );
 }
