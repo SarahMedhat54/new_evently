@@ -1,6 +1,6 @@
-import 'package:evently_c17/ui/screens/register/register_sceen.dart';
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
+import 'package:evently_c17/ui/utils/app_dialogs.dart';
 import 'package:evently_c17/ui/utils/app_routes.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/widgets/app_textfield.dart';
@@ -8,9 +8,14 @@ import 'package:evently_c17/ui/widgets/evently_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,11 +51,11 @@ class LoginScreen extends StatelessWidget {
                 textAlign: TextAlign.end,
               ),
               SizedBox(height: 48),
-              EventlyButton(text: "Login", onClick: () {}),
+              buildLoginButton(),
               SizedBox(height: 48),
               InkWell(
-                onTap: (){
-                  Navigator.push(context, AppRoutes.register,);
+                onTap: () {
+                  Navigator.push(context, AppRoutes.register);
                 },
                 child: RichText(
                   text: TextSpan(
@@ -90,4 +95,23 @@ class LoginScreen extends StatelessWidget {
       ),
     );
   }
+
+  EventlyButton buildLoginButton() => EventlyButton(
+    text: "Login",
+    onClick: () async {
+      showLoading(context);
+      await Future.delayed(Duration(seconds: 1));
+      if (mounted) {
+        Navigator.pop(context);
+        showMessage(
+          context,
+          "My first message",
+          title: "Error",
+          posButtonText: "yes",
+          negButtonText: "no",
+          onPosClick: (){}
+        );
+      }
+    },
+  );
 }
