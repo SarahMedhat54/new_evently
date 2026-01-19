@@ -1,0 +1,11 @@
+{
+  "loginScreenHeader": "تسجيل الدخول إلى حسابك",
+  "emailHint": "أدخل بريدك الإلكتروني",
+  "passwordHint": "ادخل كلمة السر",
+  "forgetPassword": "هل نسيت كلمة السر؟",
+  "login": "تسجيل الدخول",
+  "dontHaveAccount": "ليس لديك حساب؟ ",
+  "signUp": "انشاء حساب",
+  "or": "أو",
+  "loginWithGoogle": "تسجيل الدخول باستخدام جوجل"
+}
