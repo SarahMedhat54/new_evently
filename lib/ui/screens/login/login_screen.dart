@@ -1,3 +1,4 @@
+import 'package:evently_c17/l10n/app_localizations.dart';
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
 import 'package:evently_c17/ui/utils/app_dialogs.dart';
@@ -16,8 +17,10 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+
   @override
   Widget build(BuildContext context) {
+    var localization = AppLocalizations.of(context)!;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.offWhite,
@@ -29,23 +32,23 @@ class _LoginScreenState extends State<LoginScreen> {
               Image.asset(AppAssets.appLogo),
               SizedBox(height: 48),
               Text(
-                "Login to your account",
+                localization.loginHeaderMessage,
                 style: AppTextStyles.blue24SemiBold,
               ),
               SizedBox(height: 24),
               AppTextField(
-                hint: "Enter your email",
+                hint: localization.emailHint,
                 prefixIcon: SvgPicture.asset(AppAssets.icEmailSvg),
               ),
               SizedBox(height: 16),
               AppTextField(
-                hint: "Enter your password",
+                hint: localization.passwordHint,
                 suffixIcon: SvgPicture.asset(AppAssets.icEyeClosedSvg),
                 prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
               ),
               SizedBox(height: 8),
               Text(
-                "Forgot password?",
+                localization.forgetPassword,
                 textAlign: TextAlign.end,
                 style: AppTextStyles.blue14SemiBold.copyWith(
                   decoration: TextDecoration.underline,
@@ -62,11 +65,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Dont have an account?  ",
+                       localization.dontHaveAccount,
                       style: AppTextStyles.grey14Regular,
                     ),
                     Text(
-                      "Sign up",
+                      localization.signUp,
                       style: AppTextStyles.blue14SemiBold.copyWith(
                         decoration: TextDecoration.underline,
                       ),
@@ -76,13 +79,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 32),
               Text(
-                "Or",
+                localization.or,
                 textAlign: TextAlign.center,
                 style: AppTextStyles.blue14SemiBold,
               ),
               SizedBox(height: 32),
               EventlyButton(
-                text: "Login with Google",
+                text: localization.googleLogin,
                 onPress: () {},
                 backgroundColor: AppColors.white,
                 textStyle: AppTextStyles.blue18Medium,
@@ -96,7 +99,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   EventlyButton buildLoginButton() => EventlyButton(
-    text: "Login",
+    text: AppLocalizations.of(context)!.login,
     onPress: () async {
       showLoading(context);
       await Future.delayed(Duration(seconds: 1));
