@@ -1,3 +1,4 @@
+import 'package:evently_c17/ui/screens/add_event/add_event_screen.dart';
 import 'package:evently_c17/ui/screens/navigation/navigation_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +12,6 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: NavigationScreen());
+    return MaterialApp(home: AddEventScreen());
   }
 }
