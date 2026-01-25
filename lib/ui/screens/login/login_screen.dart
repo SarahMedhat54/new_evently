@@ -1,4 +1,6 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:evently_c17/l10n/app_localizations.dart';
+import 'package:evently_c17/ui/model/user_dm.dart';
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
 import 'package:evently_c17/ui/utils/app_dialogs.dart';
@@ -6,6 +8,7 @@ import 'package:evently_c17/ui/utils/app_routes.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/widgets/app_textfield.dart';
 import 'package:evently_c17/ui/widgets/evently_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -17,6 +20,9 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     AppLocalizations localizations = AppLocalizations.of(context)!;
@@ -37,11 +43,13 @@ class _LoginScreenState extends State<LoginScreen> {
               AppTextField(
                 hint: localizations.emailHint,
                 prefixIcon: SvgPicture.asset(AppAssets.icEmailSvg),
+                controller: emailController,
               ),
               SizedBox(height: 16),
               AppTextField(
                 hint: localizations.passwordHint,
                 prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
+                controller: passwordController,
                 isPassword: true,
               ),
               SizedBox(height: 8),
@@ -101,19 +109,37 @@ class _LoginScreenState extends State<LoginScreen> {
   EventlyButton buildLoginButton() => EventlyButton(
     text: AppLocalizations.of(context)!.login,
     onClick: () async {
-      showLoading(context);
-      await Future.delayed(Duration(seconds: 1));
-      if (mounted) {
-        Navigator.pop(context);
-        showMessage(
-          context,
-          "My first message",
-          title: "Error",
-          posButtonText: "yes",
-          negButtonText: "no",
-          onPosClick: () {},
-        );
+      try {
+        showLoading(context);
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+              email: emailController.text,
+              password: passwordController.text,
+            );
+        UserDM.currentUser = await getUserFromFirestore(credential.user!.uid);
+        Navigator.pop(context); // hide loading
+        Navigator.push(context, AppRoutes.navigation);
+      } on FirebaseAuthException catch (e) {
+        Navigator.pop(context); // hide loading
+        var message = e.message ?? "Something went wrong please try wrong";
+        showMessage(context, message, title: "Error", posButtonText: "ok");
+      } catch (e) {
+        print(e);
       }
     },
   );
+
+  Future<UserDM> getUserFromFirestore(String id) async {
+    var usersCollection = FirebaseFirestore.instance.collection("users");
+    var userDoc = usersCollection.doc(id);
+    DocumentSnapshot snapshot = await userDoc.get();
+    Map map = snapshot.data() as Map;
+    return UserDM(
+      id: id,
+      name: map["name"],
+      address: map["address"],
+      phoneNumber: map["phoneNumber"],
+      email: map["email"],
+    );
+  }
 }
