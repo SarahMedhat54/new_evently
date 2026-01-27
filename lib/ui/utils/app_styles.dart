@@ -14,5 +14,7 @@ abstract final class AppTextStyles{
   static const TextStyle black20SemiBold = TextStyle(color: AppColors.black, fontWeight: FontWeight.w600, fontSize: 20);
   static const TextStyle blue12Regular = TextStyle(color: AppColors.blue, fontWeight: FontWeight.w400, fontSize: 12);
   static const TextStyle grey12Regular = TextStyle(color: AppColors.grey, fontWeight: FontWeight.w400, fontSize: 12);
+  static const TextStyle blue14Medium = TextStyle(color: AppColors.black, fontWeight: FontWeight.w500, fontSize: 14);
+
 
 }
