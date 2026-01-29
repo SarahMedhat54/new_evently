@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently_c17/firebase_utils/firestore_utils.dart';
 import 'package:evently_c17/l10n/app_localizations.dart';
 import 'package:evently_c17/ui/model/user_dm.dart';
 import 'package:evently_c17/ui/utils/app_assets.dart';
@@ -31,75 +32,77 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Image.asset(AppAssets.appLogo),
-              Text(
-                localizations.loginScreenHeader,
-                style: AppTextStyles.blue24SemiBold,
-              ),
-              SizedBox(height: 16),
-              AppTextField(
-                hint: localizations.emailHint,
-                prefixIcon: SvgPicture.asset(AppAssets.icEmailSvg),
-                controller: emailController,
-              ),
-              SizedBox(height: 16),
-              AppTextField(
-                hint: localizations.passwordHint,
-                prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
-                controller: passwordController,
-                isPassword: true,
-              ),
-              SizedBox(height: 8),
-              Text(
-                localizations.forgetPassword,
-                style: AppTextStyles.blue14SemiBold.copyWith(
-                  decoration: TextDecoration.underline,
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Image.asset(AppAssets.appLogo),
+                Text(
+                  localizations.loginScreenHeader,
+                  style: AppTextStyles.blue24SemiBold,
                 ),
-                textAlign: TextAlign.end,
-              ),
-              SizedBox(height: 48),
-              buildLoginButton(),
-              SizedBox(height: 48),
-              InkWell(
-                onTap: () {
-                  Navigator.push(context, AppRoutes.register);
-                },
-                child: RichText(
-                  text: TextSpan(
-                    children: [
-                      TextSpan(
-                        text: localizations.dontHaveAccount,
-                        style: AppTextStyles.grey14Regular,
-                      ),
-                      TextSpan(
-                        text: localizations.signUp,
-                        style: AppTextStyles.blue14SemiBold.copyWith(
-                          decoration: TextDecoration.underline,
-                        ),
-                      ),
-                    ],
+                SizedBox(height: 16),
+                AppTextField(
+                  hint: localizations.emailHint,
+                  prefixIcon: SvgPicture.asset(AppAssets.icEmailSvg),
+                  controller: emailController,
+                ),
+                SizedBox(height: 16),
+                AppTextField(
+                  hint: localizations.passwordHint,
+                  prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
+                  controller: passwordController,
+                  isPassword: true,
+                ),
+                SizedBox(height: 8),
+                Text(
+                  localizations.forgetPassword,
+                  style: AppTextStyles.blue14SemiBold.copyWith(
+                    decoration: TextDecoration.underline,
                   ),
+                  textAlign: TextAlign.end,
+                ),
+                SizedBox(height: 48),
+                buildLoginButton(),
+                SizedBox(height: 48),
+                InkWell(
+                  onTap: () {
+                    Navigator.push(context, AppRoutes.register);
+                  },
+                  child: RichText(
+                    text: TextSpan(
+                      children: [
+                        TextSpan(
+                          text: localizations.dontHaveAccount,
+                          style: AppTextStyles.grey14Regular,
+                        ),
+                        TextSpan(
+                          text: localizations.signUp,
+                          style: AppTextStyles.blue14SemiBold.copyWith(
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      ],
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                SizedBox(height: 24),
+                Text(
+                  localizations.or,
+                  style: AppTextStyles.blue14SemiBold,
                   textAlign: TextAlign.center,
                 ),
-              ),
-              SizedBox(height: 24),
-              Text(
-                localizations.or,
-                style: AppTextStyles.blue14SemiBold,
-                textAlign: TextAlign.center,
-              ),
-              SizedBox(height: 24),
-              EventlyButton(
-                text: localizations.loginWithGoogle,
-                onClick: () {},
-                textColor: AppColors.blue,
-                backgroundColor: AppColors.white,
-                icon: Icon(Icons.mail, color: AppColors.blue),
-              ),
-            ],
+                SizedBox(height: 24),
+                EventlyButton(
+                  text: localizations.loginWithGoogle,
+                  onClick: () {},
+                  textColor: AppColors.blue,
+                  backgroundColor: AppColors.white,
+                  icon: Icon(Icons.mail, color: AppColors.blue),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -129,17 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
     },
   );
 
-  Future<UserDM> getUserFromFirestore(String id) async {
-    var usersCollection = FirebaseFirestore.instance.collection("users");
-    var userDoc = usersCollection.doc(id);
-    DocumentSnapshot snapshot = await userDoc.get();
-    Map map = snapshot.data() as Map;
-    return UserDM(
-      id: id,
-      name: map["name"],
-      address: map["address"],
-      phoneNumber: map["phoneNumber"],
-      email: map["email"],
-    );
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
   }
 }

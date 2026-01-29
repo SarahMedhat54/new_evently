@@ -1,5 +1,8 @@
+import 'package:evently_c17/firebase_utils/firestore_utils.dart';
 import 'package:evently_c17/ui/model/event_dm.dart';
+import 'package:evently_c17/ui/model/user_dm.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
+import 'package:evently_c17/ui/utils/app_dialogs.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/utils/constants.dart';
 import 'package:evently_c17/ui/widgets/app_textfield.dart';
@@ -18,6 +21,8 @@ class _AddEventScreenState extends State<AddEventScreen> {
   CategoryDM selectedCategory = AppConstants.customCategories[0];
   DateTime selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  TextEditingController titleController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -57,7 +62,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(height: 8),
-                    AppTextField(hint: "Event title"),
+                    AppTextField(
+                      hint: "Event title",
+                      controller: titleController,
+                    ),
                     SizedBox(height: 16),
                     Text(
                       "Description",
@@ -65,7 +73,11 @@ class _AddEventScreenState extends State<AddEventScreen> {
                       textAlign: TextAlign.start,
                     ),
                     SizedBox(height: 8),
-                    AppTextField(hint: "Event description", minLines: 5),
+                    AppTextField(
+                      hint: "Event description",
+                      minLines: 5,
+                      controller: descriptionController,
+                    ),
                     SizedBox(height: 16),
                     buildDateRow(),
                     SizedBox(height: 16),
@@ -74,12 +86,31 @@ class _AddEventScreenState extends State<AddEventScreen> {
                 ),
               ),
             ),
-            EventlyButton(text: "Add event", onClick: () {}),
+            createEventButton(),
           ],
         ),
       ),
     );
   }
+
+  EventlyButton createEventButton() => EventlyButton(
+    text: "Add event",
+    onClick: () async {
+      showLoading(context);
+      var event = EventDM(
+        categoryDM: selectedCategory,
+        dateTime: selectedDate,
+        title: titleController.text,
+        description: descriptionController.text,
+        id: "",
+        ownerId: UserDM.currentUser!.id,
+      );
+      await createEventInFirestore(event);
+      Navigator.pop(context); //HIDE LOADING
+      Navigator.pop(context); // GO BACK
+
+    },
+  );
 
   buildDateRow() => Row(
     children: [

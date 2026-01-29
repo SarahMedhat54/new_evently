@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:evently_c17/firebase_utils/firestore_utils.dart';
 import 'package:evently_c17/ui/model/user_dm.dart';
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
@@ -155,21 +156,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     },
   );
 
-  void createUserInFirestore(UserDM user) {
-    var usersCollection = FirebaseFirestore.instance.collection("users");
-    var emptyDoc = usersCollection.doc(user.id);
-    emptyDoc.set({
-      "id": user.id,
-      "name": user.name,
-      "email": user.email,
-      "address": user.address,
-      "phoneNumber": user.phoneNumber,
-      "favoriteEventIds": [],
-    });
-    // usersCollection.add({
 
-    // });
-  }
 }
 
 // json -> java script object notation; Map<String, dynamic>
