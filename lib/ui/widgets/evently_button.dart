@@ -26,7 +26,7 @@ class EventlyButton extends StatelessWidget {
     return ElevatedButton(
       onPressed: onClick,
       style: ElevatedButton.styleFrom(
-        backgroundColor: backgroundColor,
+        backgroundColor: Theme.of(context).primaryColor,
         padding: EdgeInsets.symmetric(vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       ),

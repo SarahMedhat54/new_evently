@@ -28,7 +28,6 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     AppLocalizations localizations = AppLocalizations.of(context)!;
     return Scaffold(
-      backgroundColor: AppColors.offWhite,
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 16),

@@ -73,7 +73,7 @@ class _HomeTabState extends State<HomeTab> {
         Text(
           "${UserDM.currentUser!.name}",
           textAlign: TextAlign.start,
-          style: AppTextStyles.black20SemiBold,
+          style: Theme.of(context).textTheme.titleLarge,
         ),
       ],
     );

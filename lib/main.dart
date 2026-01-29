@@ -1,9 +1,11 @@
-import 'dart:async';
-
+import 'package:evently_c17/ui/providers/language_provider.dart';
+import 'package:evently_c17/ui/providers/theme_provider.dart';
 import 'package:evently_c17/ui/screens/login/login_screen.dart';
+import 'package:evently_c17/ui/utils/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:provider/provider.dart';
 
 import 'l10n/app_localizations.dart';
 
@@ -17,15 +19,32 @@ void main() async {
       projectId: "evently-offline-c17",
     ),
   );
-  runApp(const MyApp());
+
+  runApp(ChangeNotifierProvider(
+    create: (_) => ThemeProvider(),
+    child: ChangeNotifierProvider(
+        create: (_) => LanguageProvider(),
+        child: const MyApp()),
+  ));
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  late LanguageProvider provider;
+  late ThemeProvider themeProvider;
+
   @override
   Widget build(BuildContext context) {
+    provider = Provider.of(context);
+    themeProvider = Provider.of(context);
+    /// Inherited widget
+    print("_MyAppState provider.current = ${provider.currentLocale}");
     return MaterialApp(
       home: LoginScreen(),
       localizationsDelegates: [
@@ -35,7 +54,17 @@ class MyApp extends StatelessWidget {
         AppLocalizations.delegate,
       ],
       supportedLocales: [Locale('en'), Locale('ar')],
-      locale: Locale("en"),
+      locale: Locale(provider.currentLocale),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
+
+
+
+      themeMode: themeProvider.themeMode,
     );
+  }
+
+  rebuild() {
+    setState(() {});
   }
 }

@@ -21,7 +21,6 @@ class _NavigationScreenState extends State<NavigationScreen> {
     return SafeArea(
       child: Scaffold(
         floatingActionButton: buildFAB(),
-        backgroundColor: AppColors.offWhite,
         body: tabs[selectedIndex],
         bottomNavigationBar: buildBottomNavigation(),
       ),
