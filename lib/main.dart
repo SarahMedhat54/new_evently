@@ -1,6 +1,7 @@
 import 'package:evently_c17/ui/screens/login/login_screen.dart';
 import 'package:evently_c17/ui/screens/navigation/navigation_screen.dart';
 import 'package:evently_c17/ui/screens/onboarding_screen/onboarding.dart';
+import 'package:evently_c17/ui/screens/splash_screen/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 
@@ -17,13 +18,13 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      routes: {
-        Onboarding.id:(context) => Onboarding(),
-        "Login" :(context) => LoginScreen(),
-      },
-      initialRoute: Onboarding.id,
+      // routes: {
+      //   Onboarding.id:(context) => Onboarding(),
+      //   "Login" :(context) => LoginScreen(),
+      // },
+      // initialRoute: Onboarding.id,
       debugShowCheckedModeBanner: false,
-      home:  Onboarding(),
+      home:  Splash(),
      // home: NavigationScreen(),
       localizationsDelegates: [
         AppLocalizations.delegate,

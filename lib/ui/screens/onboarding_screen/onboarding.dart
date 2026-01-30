@@ -1,16 +1,13 @@
 import 'package:evently_c17/model/onboarding_model.dart';
-import 'package:evently_c17/ui/screens/login/login_screen.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
+import 'package:evently_c17/ui/utils/app_routes.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/widgets/onboarding_button.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
-
 import '../../../data/onboarding_data.dart';
 
 class Onboarding extends StatefulWidget {
-  static String id = 'Onboarding';
-
   Onboarding({super.key});
 
   @override
@@ -27,6 +24,30 @@ class _OnboardingState extends State<Onboarding> {
     return Scaffold(
       backgroundColor: AppColors.offWhite,
       appBar: AppBar(
+        //leadingWidth: 20,
+        leading: currentIndex > 0
+            ? Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                width: 80,
+                height: 80,
+                decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(6),),
+                child: IconButton(
+                  padding: EdgeInsets.zero,
+                  constraints: const BoxConstraints(),//2 ?
+                    onPressed: () {
+                      controller.previousPage(
+                        duration: Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                    icon: Icon(Icons.arrow_back_ios_new, color: AppColors.blue),
+                  ),
+              ),
+            )
+            : SizedBox.shrink(), // 1
         backgroundColor: AppColors.offWhite,
         title: Center(child: Image.asset("assets/images/app_logo.png")),
         actions: [
@@ -35,16 +56,16 @@ class _OnboardingState extends State<Onboarding> {
             child: TextButton(
               style: TextButton.styleFrom(
                 backgroundColor: AppColors.white,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.zero),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
               onPressed: () {
                 Navigator.pushAndRemoveUntil(
                   context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()),
+                  AppRoutes.login,
                   (route) => false,
                 );
               },
-              child: Text("Skip", style: AppTextStyles.blue14Medium),
+              child: Text("Skip", style: AppTextStyles.blue14SemiBold),
             ),
           ),
         ],
@@ -64,9 +85,9 @@ class _OnboardingState extends State<Onboarding> {
                 },
                 itemCount: modelData.length,
                 itemBuilder: (context, index) {
-                  return  SingleChildScrollView(
+                  return SingleChildScrollView(
                     child: Padding(
-                      padding: const EdgeInsets.all(6.0),
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
@@ -97,7 +118,6 @@ class _OnboardingState extends State<Onboarding> {
                             style: AppTextStyles.blue14Regular,
                           ),
                         ],
-
                       ),
                     ),
                   );
@@ -105,15 +125,22 @@ class _OnboardingState extends State<Onboarding> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 20.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 16.0,
+                vertical: 20.0,
+              ),
               child: Row(
                 children: [
                   Expanded(
                     child: OnboardingButton(
-                      text:  isLast ? "Get Started" :"Next",
+                      text: isLast ? "Get Started" : "Next",
                       onPress: () {
                         if (isLast) {
-                          Navigator.pushReplacementNamed(context, 'Login');
+                          Navigator.pushAndRemoveUntil(
+                            context,
+                            AppRoutes.login,
+                            (route) => false,
+                          );
                           //Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => LoginScreen(),), (route) => false,);
                         } else {
                           controller.nextPage(
@@ -127,7 +154,6 @@ class _OnboardingState extends State<Onboarding> {
                 ],
               ),
             ),
-
           ],
         ),
       ),
