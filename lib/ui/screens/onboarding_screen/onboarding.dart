@@ -115,7 +115,7 @@ class _OnboardingState extends State<Onboarding> {
                           SizedBox(height: 10),
                           Text(
                             modelData[index].subTitle,
-                            style: AppTextStyles.blue14Regular,
+                            style: AppTextStyles.grey14Regular,
                           ),
                         ],
                       ),
