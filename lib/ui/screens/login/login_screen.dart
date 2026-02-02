@@ -8,6 +8,26 @@ import 'package:evently_c17/ui/widgets/app_text_field.dart';
 import 'package:evently_c17/ui/widgets/evently_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+
+Future<UserCredential?> signInWithGoogle() async {
+  final GoogleSignIn googleSignIn = GoogleSignIn();
+  final GoogleSignInAccount? googleUser =
+  await googleSignIn.signIn();
+  if (googleUser == null) {
+    return null;
+  }
+  final GoogleSignInAuthentication googleAuth =
+  await googleUser.authentication;
+
+  final credential = GoogleAuthProvider.credential(
+    accessToken: googleAuth.accessToken,
+    idToken: googleAuth.idToken,
+  );
+  return await FirebaseAuth.instance
+      .signInWithCredential(credential);
+}
 
 class LoginScreen extends StatefulWidget {
  static String id = 'Login';
@@ -88,7 +108,20 @@ class _LoginScreenState extends State<LoginScreen> {
               SizedBox(height: 32),
               EventlyButton(
                 text: localization.googleLogin,
-                onPress: () {},
+                onPress: () async {
+                 // signInWithGoogle();
+                  showLoading(context);
+                  var user = await signInWithGoogle();
+                  Navigator.pop(context);
+                  if (user != null) {
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      AppRoutes.navigation,
+                          (route) => false,
+                    );
+                  }
+
+                },
                 backgroundColor: AppColors.white,
                 textStyle: AppTextStyles.blue18Medium,
                 icon: Icon(Icons.g_mobiledata),

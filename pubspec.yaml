@@ -12,9 +12,12 @@ dependencies:
   cupertino_icons: ^1.0.8
   flutter_svg: ^2.2.3
   smooth_page_indicator: ^2.0.1
+  google_sign_in: ^6.2.1
   flutter_localizations:
     sdk: flutter
   intl: any
+  firebase_core: ^4.4.0
+  firebase_auth: ^6.1.4
 
 dev_dependencies:
   flutter_test:
