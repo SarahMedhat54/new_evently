@@ -1,4 +1,5 @@
 import 'package:evently_c17/ui/screens/add_event/add_event_screen.dart';
+import 'package:evently_c17/ui/screens/details/details_screen.dart';
 import 'package:evently_c17/ui/screens/login/login_screen.dart';
 import 'package:evently_c17/ui/screens/navigation/navigation_screen.dart';
 import 'package:evently_c17/ui/screens/onboarding_screen/onboarding.dart';
@@ -20,4 +21,6 @@ abstract final class AppRoutes {
 
   static MaterialPageRoute get addEvent =>
       MaterialPageRoute(builder: (_) => AddEventScreen());
+
+
 }

@@ -1,3 +1,5 @@
+import 'package:evently_c17/ui/screens/add_event/add_event_screen.dart';
+import 'package:evently_c17/ui/screens/details/details_screen.dart';
 import 'package:evently_c17/ui/screens/login/login_screen.dart';
 import 'package:evently_c17/ui/screens/navigation/navigation_screen.dart';
 import 'package:evently_c17/ui/screens/onboarding_screen/onboarding.dart';
@@ -32,8 +34,8 @@ class MyApp extends StatelessWidget {
       // },
       // initialRoute: Onboarding.id,
       debugShowCheckedModeBanner: false,
-      home:  Splash(),
-     // home: NavigationScreen(),
+      //home:  Splash(),
+      //home:DetailsScreen(),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
