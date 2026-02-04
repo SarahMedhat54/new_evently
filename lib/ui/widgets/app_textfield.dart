@@ -7,6 +7,8 @@ class AppTextField extends StatelessWidget {
   final String hint;
   final bool isPassword;
   final int minLines;
+  final TextEditingController? controller;
+
 
   const AppTextField({
     super.key,
@@ -14,7 +16,9 @@ class AppTextField extends StatelessWidget {
     this.suffixIcon,
     required this.hint,
     this.isPassword = false,
-    this.minLines = 1,
+    this.minLines = 1, this.controller,
+
+    // required TextEditingController controller
   });
 
   @override
@@ -42,6 +46,7 @@ class AppTextField extends StatelessWidget {
           minWidth: 24,
         ),
       ),
+      controller: controller,
       minLines: minLines,
       maxLines: minLines + 1,
       onChanged: (text) {
