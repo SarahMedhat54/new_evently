@@ -72,7 +72,7 @@ class EventWidget extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
           ),
         ),
-        Icon(eventDM.isFavorite ? Icons.favorite : Icons.favorite_border, color: AppColors.blue,),
+        Icon(false? Icons.favorite : Icons.favorite_border, color: AppColors.blue,),
       ],
     ),
   );

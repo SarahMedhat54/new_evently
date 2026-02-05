@@ -7,15 +7,26 @@ import 'package:evently_c17/ui/widgets/categories_tab_bar.dart';
 import 'package:evently_c17/ui/widgets/event_widget.dart';
 import 'package:flutter/material.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
+  List<EventDM> events = [];
+  List<EventDM> filteredEvents = [];
+  var selectedCategory = AppConstants.allCategories[0];
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: [buildHeader(), buildCategoriesTabBar(), buildEventsList()],
+        children: [
+          buildHeader(), buildCategoriesTabBar(),
+          //buildEventsList()
+      ],
       ),
     );
   }
@@ -59,29 +70,6 @@ class HomeTab extends StatelessWidget {
       onChanged: (category) {
         print(category.name);
       },
-    );
-  }
-
-  buildEventsList() {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: 100,
-        itemBuilder: (context, index) {
-          var category = CategoryDM(
-            name: "Sports",
-            imagePath: AppAssets.sportLight,
-            icon: Icons.bike_scooter,
-          );
-          var eventDM = EventDM(
-            categoryDM: category,
-            dateTime: DateTime.now(),
-            title: "Meeting for Updating The Development Method ",
-            description: "",
-            isFavorite: false,
-          );
-          return EventWidget(eventDM: eventDM);
-        },
-      ),
     );
   }
 }

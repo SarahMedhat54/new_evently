@@ -6,14 +6,19 @@ class AppTextField extends StatelessWidget {
   final Widget? prefixIcon;
   final Widget? suffixIcon;
   final String hint;
-  final bool isPasswordField;
+  final bool isPassword;
+  final int minLines;
+  final TextEditingController? controller;
+
 
   const AppTextField({
     super.key,
     this.prefixIcon,
     this.suffixIcon,
     required this.hint,
-    this.isPasswordField = false,
+    this.isPassword = false,
+    this.controller,
+    required this.minLines,
   });
 
   @override
@@ -45,7 +50,9 @@ class AppTextField extends StatelessWidget {
         ),
         filled: true
       ),
-      obscureText: isPasswordField,
-    );
+      controller: controller,
+      minLines: minLines,
+      maxLines: minLines,
+      obscureText: isPassword,    );
   }
 }
