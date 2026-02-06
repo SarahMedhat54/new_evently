@@ -7,7 +7,7 @@ class AppTextField extends StatelessWidget {
   final Widget? suffixIcon;
   final String hint;
   final bool isPassword;
-  final int minLines;
+  final int? minLines;
   final TextEditingController? controller;
 
 
@@ -18,7 +18,7 @@ class AppTextField extends StatelessWidget {
     required this.hint,
     this.isPassword = false,
     this.controller,
-    required this.minLines,
+     this.minLines,
   });
 
   @override

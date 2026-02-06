@@ -10,12 +10,14 @@ import '../../widgets/appbar_details.dart';
 class DetailsScreen extends StatefulWidget {
   final EventDM event;
    DetailsScreen({super.key, required this.event});
+   static String id = 'details';
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+
   CategoryDM event = AppConstants.customCategories[0];
 
   @override

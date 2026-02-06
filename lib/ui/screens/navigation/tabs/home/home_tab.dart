@@ -1,5 +1,7 @@
+import 'package:evently_c17/fire_store/firebase.dart';
 import 'package:evently_c17/model/event_dm.dart';
-import 'package:evently_c17/ui/utils/app_assets.dart';
+import 'package:evently_c17/model/user_dm.dart';
+import 'package:evently_c17/ui/screens/details/details_screen.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/utils/constants.dart';
@@ -15,18 +17,33 @@ class HomeTab extends StatefulWidget {
 }
 
 class _HomeTabState extends State<HomeTab> {
-  List<EventDM> events = [];
-  List<EventDM> filteredEvents = [];
-  var selectedCategory = AppConstants.allCategories[0];
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          buildHeader(), buildCategoriesTabBar(),
-          //buildEventsList()
-      ],
+          buildHeader(),
+          StreamBuilder(
+            stream: getEventsFromFirestore(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else if (snapshot.hasData) {
+                events = snapshot.data!;
+                filteredEvents = events;
+                filterEventsByCategory(selectedCategory);
+                return Expanded(
+                  child: Column(
+                    children: [buildCategoriesTabBar(), buildEventsList()],
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ],
       ),
     );
   }
@@ -34,7 +51,6 @@ class _HomeTabState extends State<HomeTab> {
   buildHeader() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-
       children: [
         Row(
           children: [
@@ -56,7 +72,7 @@ class _HomeTabState extends State<HomeTab> {
           ],
         ),
         Text(
-          "John Safwat",
+          "${UserDM.currentUser!.name}",
           textAlign: TextAlign.start,
           style: AppTextStyles.black20SemiBold,
         ),
@@ -68,8 +84,48 @@ class _HomeTabState extends State<HomeTab> {
     return CategoriesTabBar(
       categories: AppConstants.allCategories,
       onChanged: (category) {
-        print(category.name);
+        selectedCategory = category;
+        setState(() {});
       },
     );
   }
+
+  List<EventDM> events = [];
+  List<EventDM> filteredEvents = [];
+  CategoryDM selectedCategory = AppConstants.all;
+
+  // loadEvents() async{
+  //   events = await getEventsFromFirestore();
+  //   filteredEvents = events;
+  //   setState(() {});
+  // }
+
+  buildEventsList() {
+    return Expanded(
+      child: ListView.builder(
+        itemCount: filteredEvents.length,
+        itemBuilder: (context, index) {
+          return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsScreen(event: filteredEvents[index]),));
+              },
+              child: EventWidget(eventDM: filteredEvents[index]));
+        },
+      ),
+    );
+  }
+
+  void filterEventsByCategory(CategoryDM category) {
+    if (category != AppConstants.all) {
+      filteredEvents = events.where((event) {
+        return event.categoryDM.name == category.name;
+      }).toList();
+    } else {
+      filteredEvents = events;
+    }
+    filteredEvents.sort((event1, event2){
+      return event1.dateTime.compareTo(event2.dateTime);
+    });
+  }
+
 }

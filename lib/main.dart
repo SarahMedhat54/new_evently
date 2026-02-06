@@ -28,14 +28,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      // routes: {
-      //   Onboarding.id:(context) => Onboarding(),
-      //   "Login" :(context) => LoginScreen(),
-      // },
+      routes: {
+        // Onboarding.id:(context) => Onboarding(),
+        // "Login" :(context) => LoginScreen(),
+      },
       // initialRoute: Onboarding.id,
       debugShowCheckedModeBanner: false,
       //home:  Splash(),
-      //home:DetailsScreen(),
+      home:LoginScreen(),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
