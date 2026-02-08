@@ -10,12 +10,14 @@ import '../../widgets/appbar_details.dart';
 class DetailsScreen extends StatefulWidget {
   final EventDM event;
    DetailsScreen({super.key, required this.event});
+   static String id = 'details';
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+
   CategoryDM event = AppConstants.customCategories[0];
 
   @override
@@ -23,38 +25,60 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       backgroundColor: AppColors.offWhite,
       appBar: AppbarDetails(),
-      body: SafeArea(
-        child: Column(
-          children: [
-            ClipRRect(
-              child: Image.asset(
-                event.imagePath ,
-                width: double.infinity,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                   widget.event.categoryDM.imagePath ,
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+              SizedBox(height: 26),
+              Text(widget.event.title, style: AppTextStyles.black20SemiBold),
+              SizedBox(height: 20),
+              Container(
+                decoration:  BoxDecoration(
+                  color: AppColors.white,
+
+                ),
+                child: TimesDetailsContainer(
+                  title: DateFormat('d MMMM').format(widget.event.dateTime),
+                  subTitle: DateFormat('hh:mm a').format(widget.event.dateTime),
+                ),
+              ),
+              SizedBox(height: 20),
+              Text("Description", style: AppTextStyles.black20SemiBold),
+              SizedBox(height: 10),
+              Container(
                 height: 200,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.event.description,
+                    style: AppTextStyles.black16Medium,
+                  ),
+                ),
               ),
-            ),
-            SizedBox(height: 30),
-            Text(widget.event.title, style: AppTextStyles.black20SemiBold),
-            SizedBox(height: 20),
-            TimesDetailsContainer(
-              title: DateFormat('d mm').format(widget.event.dateTime),
-              subTitle: DateFormat('hh:mm a').format(widget.event.dateTime),
-            ),
-            SizedBox(height: 20),
-            Text("Description", style: AppTextStyles.black20SemiBold),
-            SizedBox(height: 10),
-            Container(
-              height: 200,
-              decoration: BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.circular(6),
-              ),
-              child: Text(
-                widget.event.description,
-                style: AppTextStyles.black14Medium,
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

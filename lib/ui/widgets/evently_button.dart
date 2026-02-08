@@ -1,27 +1,28 @@
+import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/app_colors.dart';
-import '../utils/app_styles.dart';
+import '../utils/app_colors.dart' show AppColors;
 
 class EventlyButton extends StatelessWidget {
   final String text;
+  final Color textColor;
   final Color backgroundColor;
-  final TextStyle textStyle;
   final Widget? icon;
+  final bool enableBorder;
   final VoidCallback onPress;
 
   const EventlyButton({
     super.key,
     required this.text,
     required this.onPress,
+    this.textColor = AppColors.white,
     this.backgroundColor = AppColors.blue,
-    this.textStyle = AppTextStyles.white18Medium,
+    this.enableBorder = false,
     this.icon,
   });
 
   @override
   Widget build(BuildContext context) {
-    // var x = <int>[1, 2, 3, if(true) 4, ...[11232, 22323, 3]];
     return ElevatedButton(
       onPressed: onPress,
       style: ElevatedButton.styleFrom(
@@ -32,8 +33,11 @@ class EventlyButton extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          if (icon != null) ...[icon!, SizedBox(width: 16)],
-          Text(text, style: textStyle),
+          if (icon != null) ...[icon!, SizedBox(width: 12)],
+          Text(
+            text,
+            style: AppTextStyles.white18Medium.copyWith(color: textColor),
+          ),
         ],
       ),
     );

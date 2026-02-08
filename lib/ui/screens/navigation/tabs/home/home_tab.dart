@@ -1,5 +1,7 @@
+import 'package:evently_c17/fire_store/firebase.dart';
 import 'package:evently_c17/model/event_dm.dart';
-import 'package:evently_c17/ui/utils/app_assets.dart';
+import 'package:evently_c17/model/user_dm.dart';
+import 'package:evently_c17/ui/screens/details/details_screen.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/utils/constants.dart';
@@ -7,15 +9,41 @@ import 'package:evently_c17/ui/widgets/categories_tab_bar.dart';
 import 'package:evently_c17/ui/widgets/event_widget.dart';
 import 'package:flutter/material.dart';
 
-class HomeTab extends StatelessWidget {
+class HomeTab extends StatefulWidget {
   const HomeTab({super.key});
 
+  @override
+  State<HomeTab> createState() => _HomeTabState();
+}
+
+class _HomeTabState extends State<HomeTab> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        children: [buildHeader(), buildCategoriesTabBar(), buildEventsList()],
+        children: [
+          buildHeader(),
+          StreamBuilder(
+            stream: getEventsFromFirestore(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text(snapshot.error.toString());
+              } else if (snapshot.hasData) {
+                events = snapshot.data!;
+                filteredEvents = events;
+                filterEventsByCategory(selectedCategory);
+                return Expanded(
+                  child: Column(
+                    children: [buildCategoriesTabBar(), buildEventsList()],
+                  ),
+                );
+              } else {
+                return CircularProgressIndicator();
+              }
+            },
+          ),
+        ],
       ),
     );
   }
@@ -23,7 +51,6 @@ class HomeTab extends StatelessWidget {
   buildHeader() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
-
       children: [
         Row(
           children: [
@@ -45,7 +72,7 @@ class HomeTab extends StatelessWidget {
           ],
         ),
         Text(
-          "John Safwat",
+          "${UserDM.currentUser!.name}",
           textAlign: TextAlign.start,
           style: AppTextStyles.black20SemiBold,
         ),
@@ -57,31 +84,48 @@ class HomeTab extends StatelessWidget {
     return CategoriesTabBar(
       categories: AppConstants.allCategories,
       onChanged: (category) {
-        print(category.name);
+        selectedCategory = category;
+        setState(() {});
       },
     );
   }
 
+  List<EventDM> events = [];
+  List<EventDM> filteredEvents = [];
+  CategoryDM selectedCategory = AppConstants.all;
+
+  // loadEvents() async{
+  //   events = await getEventsFromFirestore();
+  //   filteredEvents = events;
+  //   setState(() {});
+  // }
+
   buildEventsList() {
     return Expanded(
       child: ListView.builder(
-        itemCount: 100,
+        itemCount: filteredEvents.length,
         itemBuilder: (context, index) {
-          var category = CategoryDM(
-            name: "Sports",
-            imagePath: AppAssets.sportLight,
-            icon: Icons.bike_scooter,
-          );
-          var eventDM = EventDM(
-            categoryDM: category,
-            dateTime: DateTime.now(),
-            title: "Meeting for Updating The Development Method ",
-            description: "",
-            isFavorite: false,
-          );
-          return EventWidget(eventDM: eventDM);
+          return InkWell(
+              onTap: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailsScreen(event: filteredEvents[index]),));
+              },
+              child: EventWidget(eventDM: filteredEvents[index]));
         },
       ),
     );
   }
+
+  void filterEventsByCategory(CategoryDM category) {
+    if (category != AppConstants.all) {
+      filteredEvents = events.where((event) {
+        return event.categoryDM.name == category.name;
+      }).toList();
+    } else {
+      filteredEvents = events;
+    }
+    filteredEvents.sort((event1, event2){
+      return event1.dateTime.compareTo(event2.dateTime);
+    });
+  }
+
 }

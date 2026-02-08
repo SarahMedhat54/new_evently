@@ -1,4 +1,6 @@
+import 'package:evently_c17/fire_store/firebase.dart';
 import 'package:evently_c17/l10n/app_localizations.dart';
+import 'package:evently_c17/model/user_dm.dart';
 import 'package:evently_c17/ui/utils/app_assets.dart';
 import 'package:evently_c17/ui/utils/app_colors.dart';
 import 'package:evently_c17/ui/utils/app_dialogs.dart';
@@ -39,6 +41,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,11 +63,13 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 24),
               AppTextField(
+                controller: emailController,
                 hint: localization.emailHint,
                 prefixIcon: SvgPicture.asset(AppAssets.icEmailSvg),
               ),
               SizedBox(height: 16),
               AppTextField(
+                controller: passwordController,
                 hint: localization.passwordHint,
                 suffixIcon: SvgPicture.asset(AppAssets.icEyeClosedSvg),
                 prefixIcon: SvgPicture.asset(AppAssets.icLockSvg),
@@ -123,7 +129,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 },
                 backgroundColor: AppColors.white,
-                textStyle: AppTextStyles.blue18Medium,
                 icon: Icon(Icons.g_mobiledata),
               ),
             ],
@@ -136,15 +141,29 @@ class _LoginScreenState extends State<LoginScreen> {
   EventlyButton buildLoginButton() => EventlyButton(
     text: AppLocalizations.of(context)!.login,
     onPress: () async {
-      showLoading(context);
-      await Future.delayed(Duration(seconds: 1));
-      Navigator.pop(context);
-      showMessage(
-        context,
-        "Please try again later",
-        posText: "ok",
-        onPosClick: () {},
-      );
+      try {
+        showLoading(context);
+        final credential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(
+          email: emailController.text,
+          password: passwordController.text,
+        );
+        UserDM.currentUser = await getUserFromFirestore(credential.user!.uid);
+        Navigator.pop(context); // hide loading
+        Navigator.push(context, AppRoutes.navigation);
+      } on FirebaseAuthException catch (e) {
+        Navigator.pop(context); // hide loading
+        var message = e.message ?? "Something went wrong please try wrong";
+        showMessage(context, message, title: "Error", posText: "ok");
+      } catch (e) {
+        print(e);
+      }
     },
   );
+
+  @override
+  void dispose() {
+    super.dispose();
+    emailController.dispose();
+  }
 }

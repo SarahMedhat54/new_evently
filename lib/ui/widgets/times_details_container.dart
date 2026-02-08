@@ -10,26 +10,33 @@ class TimesDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  Container(
+      padding:  EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: AppColors.white,
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(16),
+         // border: Border.all(color: AppColors.blue, width: 1)
       ),
       child: Row(
         children: [
           Container(
+            padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: AppColors.offWhite,
-              borderRadius: BorderRadius.circular(6),
+              borderRadius: BorderRadius.circular(16),
             ),
-            child: Icon(Icons.calendar_month_outlined, color: AppColors.blue,),
+            child: Icon(Icons.calendar_month, color: AppColors.blue,),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(title, style: AppTextStyles.black20SemiBold,),
-              SizedBox(height: 4,),
-              Text(subTitle, style: AppTextStyles.grey14Regular,)
-            ],
+          SizedBox(width: 8,),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(title, style: AppTextStyles.black20SemiBold,),
+                //SizedBox(height: 4,),
+                Text(subTitle, style: AppTextStyles.grey212Regular,)
+              ],
+            ),
           )
         ],
       ),
