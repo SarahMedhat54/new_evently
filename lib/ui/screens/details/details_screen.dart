@@ -25,36 +25,56 @@ class _DetailsScreenState extends State<DetailsScreen> {
     return Scaffold(
       backgroundColor: AppColors.offWhite,
       appBar: AppbarDetails(),
-      body: SafeArea(
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              ClipRRect(
-                child: Image.asset(
-                 widget.event.categoryDM.imagePath ,
-                  width: double.infinity,
-                  height: 200,
+              Container(
+                decoration: BoxDecoration(
+                  color: AppColors.white,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(16),
+                  child: Image.asset(
+                   widget.event.categoryDM.imagePath ,
+                    width: double.infinity,
+                    height: 200,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-              SizedBox(height: 30),
+              SizedBox(height: 26),
               Text(widget.event.title, style: AppTextStyles.black20SemiBold),
               SizedBox(height: 20),
-              TimesDetailsContainer(
-                title: DateFormat('d MM').format(widget.event.dateTime),
-                subTitle: DateFormat('hh:mm a').format(widget.event.dateTime),
+              Container(
+                decoration:  BoxDecoration(
+                  color: AppColors.white,
+
+                ),
+                child: TimesDetailsContainer(
+                  title: DateFormat('d MMMM').format(widget.event.dateTime),
+                  subTitle: DateFormat('hh:mm a').format(widget.event.dateTime),
+                ),
               ),
               SizedBox(height: 20),
               Text("Description", style: AppTextStyles.black20SemiBold),
               SizedBox(height: 10),
               Container(
                 height: 200,
+                width: double.infinity,
                 decoration: BoxDecoration(
                   color: AppColors.white,
                   borderRadius: BorderRadius.circular(6),
                 ),
-                child: Text(
-                  widget.event.description,
-                  style: AppTextStyles.black14Medium,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    widget.event.description,
+                    style: AppTextStyles.black16Medium,
+                  ),
                 ),
               ),
             ],

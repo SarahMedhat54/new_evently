@@ -12,13 +12,13 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
       backgroundColor: AppColors.offWhite,
       title: Text("Event details", style: AppTextStyles.black20SemiBold),
       leading: Padding(
-        padding: EdgeInsets.all(0.8),
+        padding: EdgeInsets.all(8.0),
         child: Container(
           width: 80,
           height: 80,
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: IconButton(
             onPressed: () {
@@ -30,11 +30,11 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
       ),
       actions: [
         Container(
-          width: 30,
-          height: 30,
+          width: 40,
+          height: 40,
           decoration: BoxDecoration(
             color: AppColors.white,
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(10),
           ),
           child: IconButton(
             onPressed: () {},
@@ -42,16 +42,19 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
           ),
         ),
         SizedBox(width: 4),
-        Container(
-          width: 30,
-          height: 30,
-          decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(6),
-          ),
-          child: IconButton(
-            onPressed: () {},
-            icon: Icon(Icons.delete_outline, color: AppColors.red),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: IconButton(
+              onPressed: () {},
+              icon: Icon(Icons.delete_outline, color: AppColors.red),
+            ),
           ),
         ),
       ],
