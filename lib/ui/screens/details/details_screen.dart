@@ -9,8 +9,8 @@ import '../../widgets/appbar_details.dart';
 
 class DetailsScreen extends StatefulWidget {
   final EventDM event;
-   DetailsScreen({super.key, required this.event});
-   static String id = 'details';
+  DetailsScreen({super.key, required this.event});
+  static String id = 'details';
 
   @override
   State<DetailsScreen> createState() => _DetailsScreenState();
@@ -24,7 +24,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.offWhite,
-      appBar: AppbarDetails(),
+      appBar: AppbarDetails(event: widget.event),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
         child: SingleChildScrollView(
@@ -39,7 +39,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                   widget.event.categoryDM.imagePath ,
+                    widget.event.categoryDM.imagePath ,
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,

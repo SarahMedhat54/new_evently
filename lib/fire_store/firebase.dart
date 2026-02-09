@@ -76,6 +76,15 @@ Future<List<EventDM>> getFavoriteEventsForUser(String uid) async {
     var json = doc.data() as Map<String, dynamic>;
     return EventDM.fromJson(json);
   }).toList();
+
+
+
+}
+Future<void> updateEventInFirestore(EventDM event) async {
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(
+    "events",
+  );
+  await eventsCollection.doc(event.id).update(event.toJson());
 }
 
 // updateEvent
