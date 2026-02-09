@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
+import '../../model/event_dm.dart';
+import '../screens/edit/edit.dart';
 import '../utils/app_colors.dart';
 import '../utils/app_styles.dart';
 
 class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
-  const AppbarDetails({super.key});
+  final EventDM event;
+  const AppbarDetails({super.key, required this.event});
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,9 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context,MaterialPageRoute(builder: (context) => Edit(event: event),) );
+            },
             icon: Icon(Icons.mode_edit_sharp, color: AppColors.blue),
           ),
         ),
