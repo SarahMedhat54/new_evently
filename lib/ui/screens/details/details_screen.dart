@@ -1,3 +1,4 @@
+
 import 'package:evently_c17/model/event_dm.dart';
 
 import 'package:evently_c17/ui/widgets/times_details_container.dart';
@@ -16,6 +17,7 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
+
   CategoryDM event = AppConstants.customCategories[0];
 
   @override

@@ -12,6 +12,8 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var isDark = Theme.of(context).brightness == Brightness.dark;
+
     return AppBar(
       backgroundColor: theme.scaffoldBackgroundColor,
       title: Text("Event details", style: theme.textTheme.titleLarge?.copyWith(color: theme.primaryColor,),),
@@ -44,6 +46,7 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Navigator.push(context,MaterialPageRoute(builder: (context) => Edit(event: event),) );
             },
+            icon: Icon(Icons.mode_edit_sharp, color: isDark?theme.primaryColor:AppColors.white,),
             icon: Icon(Icons.mode_edit_sharp, color: theme.primaryColor,),
           ),
         ),

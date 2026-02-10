@@ -35,6 +35,11 @@ class TimesDetailsContainer extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(title, style: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 16,
+                  color: theme.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
               fontSize: 16,
               color: theme.primaryColor,
               fontWeight: FontWeight.bold,
