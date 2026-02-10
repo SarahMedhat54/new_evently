@@ -12,7 +12,9 @@ import 'package:evently_c17/ui/widgets/evently_button.dart';
 import 'package:flutter/material.dart';
 
 class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({super.key});
+  CategoryDM event = AppConstants.customCategories[0];
+
+   AddEventScreen({super.key});
 
   @override
   State<AddEventScreen> createState() => _AddEventScreenState();
@@ -28,6 +30,10 @@ class _AddEventScreenState extends State<AddEventScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    String imageToShow = theme.brightness == Brightness.dark
+        ? selectedCategory.imagePathDark
+        : selectedCategory.imagePathLight;
     return SafeArea(
       child: Scaffold(
         backgroundColor: AppColors.offWhite,
@@ -156,7 +162,7 @@ class _AddEventScreenState extends State<AddEventScreen> {
         title: titleController.text,
         description: descriptionController.text,
         id: "",
-        ownerId: UserDM.currentUser!.id,
+        ownerId: UserDM.currentUser!.id, imagePathDark: '', imagePathLight: '',
       );
       await createEventInFirestore(event);
       Navigator.pop(context); //HIDE LOADING

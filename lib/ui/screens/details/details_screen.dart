@@ -1,6 +1,5 @@
 import 'package:evently_c17/model/event_dm.dart';
-import 'package:evently_c17/ui/utils/app_colors.dart';
-import 'package:evently_c17/ui/utils/app_styles.dart';
+
 import 'package:evently_c17/ui/widgets/times_details_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -22,8 +21,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    String imageToShow = theme.brightness == Brightness.dark
+        ? widget.event.imagePathDark
+        : widget.event.imagePathLight;
+
     return Scaffold(
-      backgroundColor: AppColors.offWhite,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppbarDetails(event: widget.event),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
@@ -33,13 +37,13 @@ class _DetailsScreenState extends State<DetailsScreen> {
             children: [
               Container(
                 decoration: BoxDecoration(
-                  color: AppColors.white,
                   borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.primaryColor),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                    widget.event.categoryDM.imagePath ,
+                    imageToShow ,
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,
@@ -47,33 +51,32 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 ),
               ),
               SizedBox(height: 26),
-              Text(widget.event.title, style: AppTextStyles.black20SemiBold),
+              Text(widget.event.title, style: theme.textTheme.titleLarge),
               SizedBox(height: 20),
               Container(
                 decoration:  BoxDecoration(
-                  color: AppColors.white,
-
-                ),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.primaryColor),                ),
                 child: TimesDetailsContainer(
                   title: DateFormat('d MMMM').format(widget.event.dateTime),
                   subTitle: DateFormat('hh:mm a').format(widget.event.dateTime),
                 ),
               ),
               SizedBox(height: 20),
-              Text("Description", style: AppTextStyles.black20SemiBold),
+              Text("Description", style: theme.textTheme.titleLarge?.copyWith(fontSize: 18)),
               SizedBox(height: 10),
               Container(
                 height: 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  color: AppColors.white,
-                  borderRadius: BorderRadius.circular(6),
+                  borderRadius: BorderRadius.circular(16),
+                  border: Border.all(color: theme.primaryColor),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(
                     widget.event.description,
-                    style: AppTextStyles.black16Medium,
+                    style: theme.textTheme.bodyMedium,
                   ),
                 ),
               ),
