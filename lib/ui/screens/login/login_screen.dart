@@ -15,26 +15,23 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 Future<UserCredential?> signInWithGoogle() async {
   final GoogleSignIn googleSignIn = GoogleSignIn();
-  final GoogleSignInAccount? googleUser =
-  await googleSignIn.signIn();
+  final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
   if (googleUser == null) {
     return null;
   }
-  final GoogleSignInAuthentication googleAuth =
-  await googleUser.authentication;
+  final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
 
   final credential = GoogleAuthProvider.credential(
     accessToken: googleAuth.accessToken,
     idToken: googleAuth.idToken,
   );
-  return await FirebaseAuth.instance
-      .signInWithCredential(credential);
+  return await FirebaseAuth.instance.signInWithCredential(credential);
 }
 
 class LoginScreen extends StatefulWidget {
- static String id = 'Login';
-  const LoginScreen({super.key});
+  static String id = 'Login';
 
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -46,20 +43,28 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var isDark = Theme.of(context).brightness == Brightness.dark;
     var localization = AppLocalizations.of(context)!;
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.offWhite,
+        backgroundColor: theme.scaffoldBackgroundColor,
         body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Image.asset(AppAssets.appLogo),
+              isDark
+                  ? Image.asset("assets/images/app_logo.png")
+                  : Image.asset(
+                      "assets/images/Black White Minimal Modern Simple Bold Business Mag Logofff 2.png",
+                    ),
               SizedBox(height: 48),
               Text(
                 localization.loginHeaderMessage,
-                style: AppTextStyles.blue24SemiBold,
+                style: Theme.of(
+                  context,
+                ).textTheme.titleLarge?.copyWith(fontSize: 24),
               ),
               SizedBox(height: 24),
               AppTextField(
@@ -78,7 +83,8 @@ class _LoginScreenState extends State<LoginScreen> {
               Text(
                 localization.forgetPassword,
                 textAlign: TextAlign.end,
-                style: AppTextStyles.blue14SemiBold.copyWith(
+                style: isDark?AppTextStyles.blue14SemiBold.copyWith(
+                  decoration: TextDecoration.underline,):AppTextStyles.lightBlue14Regular.copyWith(
                   decoration: TextDecoration.underline,
                 ),
               ),
@@ -93,12 +99,13 @@ class _LoginScreenState extends State<LoginScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                       localization.dontHaveAccount,
+                      localization.dontHaveAccount,
                       style: AppTextStyles.grey14Regular,
                     ),
                     Text(
                       localization.signUp,
-                      style: AppTextStyles.blue14SemiBold.copyWith(
+                      style: isDark?AppTextStyles.blue14SemiBold.copyWith(
+                        decoration: TextDecoration.underline,):AppTextStyles.lightBlue14Regular.copyWith(
                         decoration: TextDecoration.underline,
                       ),
                     ),
@@ -113,9 +120,11 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               SizedBox(height: 32),
               EventlyButton(
+
                 text: localization.googleLogin,
+
                 onPress: () async {
-                 // signInWithGoogle();
+                  // signInWithGoogle();
                   showLoading(context);
                   var user = await signInWithGoogle();
                   Navigator.pop(context);
@@ -123,12 +132,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     Navigator.pushAndRemoveUntil(
                       context,
                       AppRoutes.navigation,
-                          (route) => false,
+                      (route) => false,
                     );
                   }
-
                 },
-                backgroundColor: AppColors.white,
+                backgroundColor: isDark?AppColors.white: Colors.transparent,
                 icon: Icon(Icons.g_mobiledata),
               ),
             ],
@@ -145,9 +153,9 @@ class _LoginScreenState extends State<LoginScreen> {
         showLoading(context);
         final credential = await FirebaseAuth.instance
             .signInWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
-        );
+              email: emailController.text,
+              password: passwordController.text,
+            );
         UserDM.currentUser = await getUserFromFirestore(credential.user!.uid);
         Navigator.pop(context); // hide loading
         Navigator.push(context, AppRoutes.navigation);

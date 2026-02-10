@@ -5,8 +5,8 @@ import '../utils/app_colors.dart' show AppColors;
 
 class EventlyButton extends StatelessWidget {
   final String text;
-  final Color textColor;
-  final Color backgroundColor;
+  final Color? backgroundColor;
+  final Color? textColor;
   final Widget? icon;
   final bool enableBorder;
   final VoidCallback onPress;
