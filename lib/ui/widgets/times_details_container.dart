@@ -9,22 +9,24 @@ class TimesDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return  Container(
       padding:  EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: AppColors.white,
         borderRadius: BorderRadius.circular(16),
-         // border: Border.all(color: AppColors.blue, width: 1)
+        border: Border.all(color: theme.primaryColor),
+        // border: Border.all(color: AppColors.blue, width: 1)
       ),
       child: Row(
         children: [
           Container(
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
-              color: AppColors.offWhite,
-              borderRadius: BorderRadius.circular(16),
+              borderRadius: BorderRadius.circular(10),
+              color: theme.primaryColor.withOpacity(0.1),
+              border: Border.all(color: theme.primaryColor),
             ),
-            child: Icon(Icons.calendar_month, color: AppColors.blue,),
+            child: Icon(Icons.calendar_month,color: theme.primaryColor,),
           ),
           SizedBox(width: 8,),
           Expanded(
@@ -32,9 +34,22 @@ class TimesDetailsContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(title, style: AppTextStyles.black20SemiBold,),
+                Text(title, style: theme.textTheme.titleLarge?.copyWith(
+                  fontSize: 16,
+                  color: theme.primaryColor,
+                  fontWeight: FontWeight.bold,
+                ),
+                ),
                 //SizedBox(height: 4,),
-                Text(subTitle, style: AppTextStyles.grey212Regular,)
+                Text(
+                  subTitle,
+                  style: theme.textTheme.bodyMedium?.copyWith(
+                    color: theme.brightness == Brightness.dark
+                        ? Colors.grey[400]
+                        : AppColors.grey2,
+                    fontWeight: FontWeight.w500,
+                  ),
+                )
               ],
             ),
           )
