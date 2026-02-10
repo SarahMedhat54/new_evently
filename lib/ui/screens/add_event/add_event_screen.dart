@@ -1,7 +1,4 @@
-import 'package:evently_c17/fire_store/firebase.dart';
-import 'package:evently_c17/model/event_dm.dart';
-import 'package:evently_c17/model/user_dm.dart';
-import 'package:evently_c17/ui/screens/details/details_screen.dart';
+
 import 'package:evently_c17/ui/utils/app_colors.dart';
 import 'package:evently_c17/ui/utils/app_dialogs.dart';
 import 'package:evently_c17/ui/utils/app_styles.dart';
@@ -10,6 +7,10 @@ import 'package:evently_c17/ui/widgets/app_textfield.dart';
 import 'package:evently_c17/ui/widgets/categories_tab_bar.dart';
 import 'package:evently_c17/ui/widgets/evently_button.dart';
 import 'package:flutter/material.dart';
+
+import '../../../fire_store/firebase.dart';
+import '../../../model/event_dm.dart';
+import '../../../model/user_dm.dart';
 
 class AddEventScreen extends StatefulWidget {
   const AddEventScreen({super.key});
@@ -25,127 +26,74 @@ class _AddEventScreenState extends State<AddEventScreen> {
   TextEditingController titleController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: AppColors.offWhite,
-        appBar: AppBar(
-          title: Text("Add Event", style: AppTextStyles.black16Medium),
-          centerTitle: true,
-          backgroundColor: Colors.transparent,
-        ),
-        body: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Image.asset(
-                        selectedCategory.imagePath,
-                        height: MediaQuery.of(context).size.height * .25,
-                      ),
-                      SizedBox(height: 16),
-                      CategoriesTabBar(
-                        categories: AppConstants.customCategories,
-                        onChanged: (selectedCategory) {
-                          this.selectedCategory = selectedCategory;
-                          setState(() {});
-                        },
-                      ),
-                      SizedBox(height: 16),
-                      Text(
-                        "Title",
-                        textAlign: TextAlign.start,
-                        style: AppTextStyles.black16Medium,
-                      ),
-                      SizedBox(height: 8),
-                      AppTextField(hint: "Event Title" , controller: titleController,),
-                      SizedBox(height: 16),
-                      Text(
-                        "Description",
-                        textAlign: TextAlign.start,
-                        style: AppTextStyles.black16Medium,
-                      ),
-                      SizedBox(height: 8),
-                      AppTextField(hint: "Event Description....", minLines: 4 , controller: descriptionController,
-                      ),
-                      SizedBox(height: 16),
-                      buildChooseDateRow(),
-                      SizedBox(height: 16),
-                      buildChooseTimeRow(),
-                    ],
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Add event"),
+        centerTitle: true,
+        backgroundColor: Colors.transparent,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Image.asset(
+                      selectedCategory.imagePath,
+                      height: MediaQuery.of(context).size.height * .25,
+                    ),
+                    SizedBox(height: 16),
+                    CategoriesTabBar(
+                      categories: AppConstants.customCategories,
+                      onChanged: (category) {
+                        selectedCategory = category;
+                        setState(() {});
+                      },
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      "Title",
+                      style: AppTextStyles.black16Medium,
+                      textAlign: TextAlign.start,
+                    ),
+                    SizedBox(height: 8),
+                    AppTextField(
+                      hint: "Event title",
+                      controller: titleController,
+                    ),
+                    SizedBox(height: 16),
+                    Text(
+                      "Description",
+                      style: AppTextStyles.black16Medium,
+                      textAlign: TextAlign.start,
+                    ),
+                    SizedBox(height: 8),
+                    AppTextField(
+                      hint: "Event description",
+                      minLines: 5,
+                      controller: descriptionController,
+                    ),
+                    SizedBox(height: 16),
+                    buildDateRow(),
+                    SizedBox(height: 16),
+                    buildTimeRow(),
+                  ],
                 ),
               ),
-              createEventButton(),
-            ],
-          ),
+            ),
+            createEventButton(),
+          ],
         ),
       ),
     );
   }
 
-  buildChooseDateRow() => Row(
-    children: [
-      Icon(Icons.calendar_month, size: 24, color: AppColors.blue),
-      SizedBox(width: 8),
-      Text("Event Date", style: AppTextStyles.black16Medium),
-      Text("${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
-      Spacer(),
-      InkWell(
-        onTap: () async {
-          selectedDate =
-              await showDatePicker(
-                context: context,
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(Duration(days: 365)),
-                initialDate: selectedDate,
-              ) ??
-              selectedDate;
-          setState(() {});
-        },
-        child: Text(
-          "Choose Date",
-          style: AppTextStyles.blue14Regular.copyWith(
-            decoration: TextDecoration.underline,
-          ),
-        ),
-      ),
-    ],
-  );
-
-  buildChooseTimeRow() => Row(
-    children: [
-      Icon(Icons.access_time, size: 24, color: AppColors.blue),
-      SizedBox(width: 8),
-      Text("Event Time", style: AppTextStyles.black16Medium),
-      Text(" ${selectedTime.hour}:${selectedTime.minute}"),
-      Spacer(),
-      InkWell(
-        onTap: () async {
-          selectedTime =
-              await showTimePicker(
-                context: context,
-                initialTime: selectedTime,
-              ) ??
-              selectedTime;
-          setState(() {});
-        },
-        child: Text(
-          "Choose Time",
-          style: AppTextStyles.blue14Regular.copyWith(
-            decoration: TextDecoration.underline,
-          ),
-        ),
-      ),
-    ],
-  );
   EventlyButton createEventButton() => EventlyButton(
     text: "Add event",
     onPress: () async {
@@ -163,5 +111,68 @@ class _AddEventScreenState extends State<AddEventScreen> {
       Navigator.pop(context); // GO BACK
 
     },
+  );
+
+  buildDateRow() => Row(
+    children: [
+      Icon(Icons.calendar_month, color: AppColors.blue, size: 24),
+      SizedBox(width: 8),
+      Text(
+        "${selectedDate.year}/${selectedDate.month}/${selectedDate.day} ",
+        style: AppTextStyles.black16Medium,
+      ),
+      Spacer(),
+      InkWell(
+        onTap: () async {
+          selectedDate =
+              (await showDatePicker(
+                context: context,
+                firstDate: DateTime.now(),
+                lastDate: DateTime.now().add(Duration(days: 365)),
+                initialDate: selectedDate,
+                selectableDayPredicate: (date) {
+                  return date.weekday != 5;
+                },
+              )) ??
+                  selectedDate;
+          setState(() {});
+        },
+        child: Text(
+          "Choose date",
+          style: AppTextStyles.blue14SemiBold.copyWith(
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+    ],
+  );
+
+  buildTimeRow() => Row(
+    children: [
+      Icon(Icons.timer_outlined, color: AppColors.blue, size: 24),
+      SizedBox(width: 8),
+      Text(
+        "${selectedTime.hour}:${selectedTime.minute}",
+        style: AppTextStyles.black16Medium,
+      ),
+      Spacer(),
+      InkWell(
+        onTap: () async {
+          selectedTime =
+              await showTimePicker(
+                context: context,
+                initialTime: selectedTime,
+              ) ??
+                  selectedTime;
+          setState(() {});
+        },
+        child: Text(
+          "Choose time",
+          style: AppTextStyles.blue14SemiBold.copyWith(
+            decoration: TextDecoration.underline,
+          ),
+        ),
+      ),
+    ],
   );
 }

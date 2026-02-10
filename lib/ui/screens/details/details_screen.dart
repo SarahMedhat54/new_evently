@@ -17,13 +17,14 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-
   CategoryDM event = AppConstants.customCategories[0];
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var isDark = Theme.of(context).brightness == Brightness.dark;
     return Scaffold(
-      backgroundColor: AppColors.offWhite,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppbarDetails(event: widget.event),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
@@ -39,7 +40,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                    widget.event.categoryDM.imagePath ,
+                    isDark
+                        ? widget.event.categoryDM.imageDarkPath
+                        : widget.event.categoryDM.imagePath,
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,

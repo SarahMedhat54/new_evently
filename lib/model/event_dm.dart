@@ -45,21 +45,24 @@ class EventDM {
 class CategoryDM {
   String name;
   String imagePath;
+  String imageDarkPath;
+
   IconData icon;
 
-  CategoryDM({required this.name, required this.imagePath, required this.icon});
+  CategoryDM({required this.name, required this.imagePath,required this.imageDarkPath, required this.icon});
   static CategoryDM fromJson(Map<String, dynamic> json) {
     int codePoint = json["icon"];
     return CategoryDM(
       name: json["name"],
       imagePath: json["imagePath"],
+      imageDarkPath: json["imageDarkPath"],
       icon: IconData(codePoint),
     );
   }
 
 
   toJson() {
-    return {"name": name, "imagePath": imagePath, "icon": icon.codePoint};
+    return {"name": name, "imagePath": imagePath,"imageDarkPath": imageDarkPath , "icon": icon.codePoint};
   }
 }
 

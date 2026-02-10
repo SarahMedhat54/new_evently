@@ -21,8 +21,10 @@ class _OnboardingState extends State<Onboarding> {
 
   @override
   Widget build(BuildContext context) {
+    var isDark = Theme.of(context).brightness == Brightness.dark;
+    var theme = Theme.of(context);
     return Scaffold(
-      backgroundColor: AppColors.offWhite,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         //leadingWidth: 20,
         leading: currentIndex > 0
@@ -32,8 +34,9 @@ class _OnboardingState extends State<Onboarding> {
                 width: 80,
                 height: 80,
                 decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(6),),
+                  borderRadius: BorderRadius.circular(10),
+                  border: Border.all(color: theme.primaryColor),
+                ),
                 child: IconButton(
                   padding: EdgeInsets.zero,
                   constraints: const BoxConstraints(),//2 ?
@@ -48,14 +51,15 @@ class _OnboardingState extends State<Onboarding> {
               ),
             )
             : SizedBox.shrink(), // 1
-        backgroundColor: AppColors.offWhite,
+        backgroundColor: theme.scaffoldBackgroundColor,
         title: Center(child: Image.asset("assets/images/app_logo.png")),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
             child: TextButton(
               style: TextButton.styleFrom(
-                backgroundColor: AppColors.white,
+                backgroundColor: Theme.of(context).cardColor,
+                side: BorderSide(color: Theme.of(context).primaryColor),
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
               ),
               onPressed: () {
@@ -92,14 +96,17 @@ class _OnboardingState extends State<Onboarding> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Image.asset(modelData[index].image),
+                          Image.asset(
+                            isDark ? modelData[index].imageDark : modelData[index].image,
+                            height: MediaQuery.of(context).size.height * 0.45,
+                          ),
                           Center(
                             child: SmoothPageIndicator(
                               controller: controller,
                               effect: ExpandingDotsEffect(
                                 dotWidth: 10,
-                                dotColor: AppColors.grey,
-                                activeDotColor: AppColors.blue,
+                                dotColor: isDark ? Colors.grey : AppColors.grey,
+                                activeDotColor: isDark ? Colors.white : AppColors.blue,
                                 dotHeight: 10,
                                 spacing: 5,
                                 expansionFactor: 3,
@@ -110,12 +117,12 @@ class _OnboardingState extends State<Onboarding> {
                           SizedBox(height: 10),
                           Text(
                             modelData[index].title,
-                            style: AppTextStyles.black20SemiBold,
+                            style: theme.textTheme.titleLarge,
                           ),
                           SizedBox(height: 10),
                           Text(
                             modelData[index].subTitle,
-                            style: AppTextStyles.grey14Regular,
+                            style: theme.textTheme.bodyMedium,
                           ),
                         ],
                       ),
