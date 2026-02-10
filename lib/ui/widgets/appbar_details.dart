@@ -30,7 +30,7 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_new, color:  isDark?theme.primaryColor:Colors.white,),
+            icon: Icon(Icons.arrow_back_ios_new, color: theme.primaryColor,),
           ),
         ),
       ),
@@ -47,6 +47,7 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
               Navigator.push(context,MaterialPageRoute(builder: (context) => Edit(event: event),) );
             },
             icon: Icon(Icons.mode_edit_sharp, color: isDark?theme.primaryColor:AppColors.white,),
+            icon: Icon(Icons.mode_edit_sharp, color: theme.primaryColor,),
           ),
         ),
         SizedBox(width: 4),

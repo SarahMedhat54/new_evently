@@ -29,6 +29,8 @@ abstract final class AppTheme {
   );
 
 
+  );
+
   static ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.darkBlue,
     primaryColor: AppColors.blue,
@@ -39,23 +41,14 @@ abstract final class AppTheme {
       bodyMedium: AppTextStyles.grey14Regular.copyWith(color: Colors.white),
       labelMedium: TextStyle(color: AppColors.blue, fontSize: 16, fontWeight: FontWeight.bold),
 
+      bodyMedium: AppTextStyles.black16Medium.copyWith(color: Colors.white),
+      labelMedium: TextStyle(color: AppColors.blue, fontSize: 16, fontWeight: FontWeight.bold),
     ),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.darkBlue,
-      centerTitle: true,
-      iconTheme: IconThemeData(color: Colors.white),
-      titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
+      iconTheme: IconThemeData(color: AppColors.blue),
+      titleTextStyle: TextStyle(color: AppColors.blue, fontSize: 16),
     ),
-    elevatedButtonTheme: ElevatedButtonThemeData(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.lightBlue,
-        foregroundColor: Colors.white,
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
-        textStyle: AppTextStyles.white18Medium,
-      ),
-    ),
-
   );
 }

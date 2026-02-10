@@ -41,6 +41,9 @@ class EventDM {
       "title": title,
       "description": description,
       "dateTime": dateTime, // Firestore SDK converts DateTime to Timestamp automatically
+      "dateTime": dateTime,
+      "imagePathDark": imagePathDark,
+      "imagePathLight": imagePathLight,
     };
   }
 }
@@ -49,12 +52,16 @@ class CategoryDM {
   String name;
   String imagePath;
   String imageDarkPath;
+  String imagePathLight;
+  String imagePathDark;
   IconData icon;
 
   CategoryDM({
     required this.name,
     required this.imagePath,
     required this.imageDarkPath,
+    required this.imagePathLight,
+    required this.imagePathDark,
     required this.icon,
   });
 
@@ -68,6 +75,11 @@ class CategoryDM {
         json["icon"] as int? ?? 0xe237,
         fontFamily: 'MaterialIcons',
       ),
+      name: json["name"],
+      imagePath: json["imagePath"] ?? "",
+      imagePathLight: json["imagePathLight"] ?? json["imagePath"] ,
+      imagePathDark: json["imagePathDark"] ?? json["imagePath"] ,
+      icon: IconData(codePoint, fontFamily: 'MaterialIcons'),
     );
   }
 
@@ -76,6 +88,12 @@ class CategoryDM {
       "name": name,
       "imagePath": imagePath,
       "imageDarkPath": imageDarkPath,
+      "icon": icon.codePoint,
+    };
+  }
+}
+      "imagePathLight": imagePathLight,
+      "imagePathDark": imagePathDark,
       "icon": icon.codePoint,
     };
   }

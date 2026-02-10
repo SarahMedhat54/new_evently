@@ -13,7 +13,9 @@ import '../../../model/event_dm.dart';
 import '../../../model/user_dm.dart';
 
 class AddEventScreen extends StatefulWidget {
-  const AddEventScreen({super.key});
+  CategoryDM event = AppConstants.customCategories[0];
+
+   AddEventScreen({super.key});
 
   @override
   State<AddEventScreen> createState() => _AddEventScreenState();
@@ -84,6 +86,63 @@ class _AddEventScreenState extends State<AddEventScreen> {
                     SizedBox(height: 16),
                     buildTimeRow(),
                   ],
+    var theme = Theme.of(context);
+    String imageToShow = theme.brightness == Brightness.dark
+        ? selectedCategory.imagePathDark
+        : selectedCategory.imagePathLight;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: AppColors.offWhite,
+        appBar: AppBar(
+          title: Text("Add Event", style: AppTextStyles.black16Medium),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+        ),
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Image.asset(
+                        selectedCategory.imagePath,
+                        height: MediaQuery.of(context).size.height * .25,
+                      ),
+                      SizedBox(height: 16),
+                      CategoriesTabBar(
+                        categories: AppConstants.customCategories,
+                        onChanged: (selectedCategory) {
+                          this.selectedCategory = selectedCategory;
+                          setState(() {});
+                        },
+                      ),
+                      SizedBox(height: 16),
+                      Text(
+                        "Title",
+                        textAlign: TextAlign.start,
+                        style: AppTextStyles.black16Medium,
+                      ),
+                      SizedBox(height: 8),
+                      AppTextField(hint: "Event Title" , controller: titleController,),
+                      SizedBox(height: 16),
+                      Text(
+                        "Description",
+                        textAlign: TextAlign.start,
+                        style: AppTextStyles.black16Medium,
+                      ),
+                      SizedBox(height: 8),
+                      AppTextField(hint: "Event Description....", minLines: 4 , controller: descriptionController,
+                      ),
+                      SizedBox(height: 16),
+                      buildChooseDateRow(),
+                      SizedBox(height: 16),
+                      buildChooseTimeRow(),
+                    ],
+                  ),
                 ),
               ),
             ),
@@ -174,5 +233,24 @@ class _AddEventScreenState extends State<AddEventScreen> {
         ),
       ),
     ],
+  );
+}
+  EventlyButton createEventButton() => EventlyButton(
+    text: "Add event",
+    onPress: () async {
+      showLoading(context);
+      var event = EventDM(
+        categoryDM: selectedCategory,
+        dateTime: selectedDate,
+        title: titleController.text,
+        description: descriptionController.text,
+        id: "",
+        ownerId: UserDM.currentUser!.id, imagePathDark: '', imagePathLight: '',
+      );
+      await createEventInFirestore(event);
+      Navigator.pop(context); //HIDE LOADING
+      Navigator.pop(context); // GO BACK
+
+    },
   );
 }

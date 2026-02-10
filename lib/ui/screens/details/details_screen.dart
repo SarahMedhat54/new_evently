@@ -24,6 +24,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var isDark = Theme.of(context).brightness == Brightness.dark;
+    String imageToShow = theme.brightness == Brightness.dark
+        ? widget.event.imagePathDark
+        : widget.event.imagePathLight;
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppbarDetails(event: widget.event),
@@ -41,7 +45,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
-                    isDark ? widget.event.categoryDM.imagePath : widget.event.categoryDM.imageDarkPath ,
+                    isDark
+                        ? widget.event.categoryDM.imageDarkPath
+                        : widget.event.categoryDM.imagePath,
+                    imageToShow ,
                     width: double.infinity,
                     height: 200,
                     fit: BoxFit.cover,

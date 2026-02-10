@@ -40,6 +40,11 @@ class TimesDetailsContainer extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
                 ),
+              fontSize: 16,
+              color: theme.primaryColor,
+              fontWeight: FontWeight.bold,
+            ),
+            ),
                 //SizedBox(height: 4,),
                 Text(
                   subTitle,
