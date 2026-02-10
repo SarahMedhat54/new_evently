@@ -11,7 +11,8 @@ class OnboardingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeStyle = Theme.of(context).elevatedButtonTheme.style;    return ElevatedButton(
+    var themeStyle = Theme.of(context).elevatedButtonTheme.style;
+    return ElevatedButton(
       style: themeStyle,
       onPressed:onPress,
       child: Text(text, style: AppTextStyles.white18Medium),
