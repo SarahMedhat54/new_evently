@@ -30,29 +30,33 @@ class _OnboardingState extends State<Onboarding> {
         leading: currentIndex > 0
             ? Padding(
               padding: const EdgeInsets.all(16.0),
-              child: Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: theme.primaryColor),
-                ),
-                child: IconButton(
-                  padding: EdgeInsets.zero,
-                  constraints: const BoxConstraints(),//2 ?
-                    onPressed: () {
-                      controller.previousPage(
-                        duration: Duration(milliseconds: 300),
-                        curve: Curves.easeInOut,
-                      );
-                    },
-                    icon: Icon(Icons.arrow_back_ios_new, color: AppColors.blue),
+              child: Center(
+                child: Container(
+                  width: 100,
+                  height: 100,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(color: isDark ? Colors.white : theme.primaryColor,),
                   ),
+                  child: IconButton(
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),//2 ?
+                      onPressed: () {
+                        controller.previousPage(
+                          duration: Duration(milliseconds: 300),
+                          curve: Curves.easeInOut,
+                        );
+                      },
+                    icon: Icon(
+                        Icons.arrow_back_ios_new,size: 15,
+                        color: theme.appBarTheme.iconTheme?.color),
+                    ),
+                ),
               ),
             )
             : SizedBox.shrink(), // 1
         backgroundColor: theme.scaffoldBackgroundColor,
-        title: Center(child: Image.asset("assets/images/app_logo.png")),
+        title: Center(child:isDark?Image.asset("assets/images/app_logo.png"): Image.asset("assets/images/Black White Minimal Modern Simple Bold Business Mag Logofff 2.png")),
         actions: [
           Padding(
             padding: const EdgeInsets.only(right: 16),
@@ -69,9 +73,11 @@ class _OnboardingState extends State<Onboarding> {
                   (route) => false,
                 );
               },
-              child: Text("Skip", style: AppTextStyles.blue14SemiBold),
+              child: Text("Skip", style: AppTextStyles.blue14SemiBold.copyWith(
+                color: isDark ? Colors.blue : AppColors.white,),
             ),
           ),
+      ),
         ],
       ),
       body: SafeArea(
@@ -97,7 +103,7 @@ class _OnboardingState extends State<Onboarding> {
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Image.asset(
-                            isDark ? modelData[index].imageDark : modelData[index].image,
+                            isDark ? modelData[index].image : modelData[index].imageDark,
                             height: MediaQuery.of(context).size.height * 0.45,
                           ),
                           Center(
@@ -105,8 +111,8 @@ class _OnboardingState extends State<Onboarding> {
                               controller: controller,
                               effect: ExpandingDotsEffect(
                                 dotWidth: 10,
-                                dotColor: isDark ? Colors.grey : AppColors.grey,
-                                activeDotColor: isDark ? Colors.white : AppColors.blue,
+                                dotColor: isDark ? Colors.grey: AppColors.white,
+                                activeDotColor: isDark ? Colors.blue : AppColors.lightBlue,
                                 dotHeight: 10,
                                 spacing: 5,
                                 expansionFactor: 3,

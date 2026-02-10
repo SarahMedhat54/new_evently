@@ -22,7 +22,7 @@ abstract final class AppTheme {
         backgroundColor: AppColors.blue,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         textStyle: AppTextStyles.white18Medium,
       ),
     ),
@@ -36,22 +36,23 @@ abstract final class AppTheme {
 
     textTheme: TextTheme(
       titleLarge: AppTextStyles.black20SemiBold.copyWith(color: Colors.white),
-      bodyMedium: AppTextStyles.black16Medium.copyWith(color: Colors.white),
+      bodyMedium: AppTextStyles.grey14Regular.copyWith(color: Colors.white),
       labelMedium: TextStyle(color: AppColors.blue, fontSize: 16, fontWeight: FontWeight.bold),
+
     ),
 
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.darkBlue,
-      iconTheme: IconThemeData(color: AppColors.blue),
-      titleTextStyle: TextStyle(color: AppColors.blue, fontSize: 16),
+      centerTitle: true,
+      iconTheme: IconThemeData(color: Colors.white),
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
     ),
-
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.blue,
+        backgroundColor: AppColors.lightBlue,
         foregroundColor: Colors.white,
         padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
         textStyle: AppTextStyles.white18Medium,
       ),
     ),

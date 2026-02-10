@@ -2,42 +2,45 @@ import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class EventDM {
-  String id ;
-  String ownerId ;
+  String id;
+  String ownerId;
   CategoryDM categoryDM;
   String title;
   String description;
   DateTime dateTime;
-  //bool isFavorite;
 
   EventDM({
-    required this.id ,
-    required this.ownerId ,
+    required this.id,
+    required this.ownerId,
     required this.categoryDM,
     required this.dateTime,
     required this.title,
     required this.description,
-    //required this.isFavorite,
   });
+
   static EventDM fromJson(Map<String, dynamic> json) {
-    Timestamp timeStamp = json["dateTime"];
+    // Safely handle the Firestore Timestamp
+    Timestamp? timeStamp = json["dateTime"] as Timestamp?;
+
     return EventDM(
-      id: json["id"],
-      ownerId: json["ownerId"],
-      categoryDM: CategoryDM.fromJson(json["category"]),
-      dateTime: timeStamp.toDate(),
-      title: json["title"],
-      description: json["description"],
+      id: json["id"] as String? ?? '',
+      ownerId: json["ownerId"] as String? ?? "",
+      // If "category" is missing in Firestore, we pass an empty map to CategoryDM
+      categoryDM: CategoryDM.fromJson(json["category"] as Map<String, dynamic>? ?? {}),
+      dateTime: timeStamp?.toDate() ?? DateTime.now(),
+      title: json["title"] as String? ?? "",
+      description: json["description"] as String? ?? "",
     );
   }
-   Map<String, dynamic> toJson() {
+
+  Map<String, dynamic> toJson() {
     return {
       "id": id,
       "ownerId": ownerId,
       "category": categoryDM.toJson(),
       "title": title,
       "description": description,
-      "dateTime": dateTime,
+      "dateTime": dateTime, // Firestore SDK converts DateTime to Timestamp automatically
     };
   }
 }
@@ -46,23 +49,34 @@ class CategoryDM {
   String name;
   String imagePath;
   String imageDarkPath;
-
   IconData icon;
 
-  CategoryDM({required this.name, required this.imagePath,required this.imageDarkPath, required this.icon});
+  CategoryDM({
+    required this.name,
+    required this.imagePath,
+    required this.imageDarkPath,
+    required this.icon,
+  });
+
   static CategoryDM fromJson(Map<String, dynamic> json) {
-    int codePoint = json["icon"];
     return CategoryDM(
-      name: json["name"],
-      imagePath: json["imagePath"],
-      imageDarkPath: json["imageDarkPath"],
-      icon: IconData(codePoint),
+      name: json["name"] as String? ?? "Unknown",
+      imagePath: json["imagePath"] as String? ?? "",
+      imageDarkPath: json["imageDarkPath"] as String? ?? "",
+      // Provide a default icon (Icons.error) if the codePoint is missing
+      icon: IconData(
+        json["icon"] as int? ?? 0xe237,
+        fontFamily: 'MaterialIcons',
+      ),
     );
   }
 
-
-  toJson() {
-    return {"name": name, "imagePath": imagePath,"imageDarkPath": imageDarkPath , "icon": icon.codePoint};
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "imagePath": imagePath,
+      "imageDarkPath": imageDarkPath,
+      "icon": icon.codePoint,
+    };
   }
 }
-

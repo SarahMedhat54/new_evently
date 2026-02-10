@@ -11,14 +11,8 @@ class OnboardingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-        backgroundColor: AppColors.blue,
-          padding: EdgeInsets.symmetric(vertical: 12),
-           shape: RoundedRectangleBorder(
-           borderRadius: BorderRadius.circular(14),
-        )
-      ),
+    var themeStyle = Theme.of(context).elevatedButtonTheme.style;    return ElevatedButton(
+      style: themeStyle,
       onPressed:onPress,
       child: Text(text, style: AppTextStyles.white18Medium),
     );
