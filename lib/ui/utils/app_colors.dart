@@ -14,3 +14,8 @@ abstract final class AppColors {
   static const Color darkBlue = Color(0xff000F30);
   static const Color lightBlue = Color(0xff457AED);
 }
+
+
+  // dark
+  static const Color darkBlue = Color(0xff000F30);
+  static const Color lightBlue = Color(0xff457AED);}

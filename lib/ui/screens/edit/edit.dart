@@ -3,6 +3,7 @@ import 'package:evently_c17/ui/utils/app_styles.dart';
 import 'package:evently_c17/ui/widgets/app_text_field.dart';
 import 'package:evently_c17/ui/widgets/categories_tab_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../../../fire_store/firebase.dart';
 import '../../../model/event_dm.dart';
@@ -151,22 +152,20 @@ class _EditState extends State<Edit> {
       Icon(Icons.calendar_month, size: 24, color: AppColors.blue),
       SizedBox(width: 8),
       Text("Event Date", style: AppTextStyles.black16Medium),
-      Text("${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
-      Spacer(),
+      const Spacer(),
       InkWell(
         onTap: () async {
-          selectedDate =
-              await showDatePicker(
-                context: context,
-                firstDate: DateTime.now(),
-                lastDate: DateTime.now().add(Duration(days: 365)),
-                initialDate: selectedDate,
-              ) ??
-                  selectedDate;
+          selectedDate = await showDatePicker(
+            context: context,
+            firstDate: DateTime(2023),
+            lastDate: DateTime.now().add(const Duration(days: 365 * 5)),
+            initialDate: selectedDate,
+          ) ?? selectedDate;
+
           setState(() {});
         },
         child: Text(
-          "Choose Date",
+          DateFormat('MMM dd, yyyy').format(selectedDate),
           style: AppTextStyles.blue14Regular.copyWith(
             decoration: TextDecoration.underline,
           ),
@@ -180,20 +179,21 @@ class _EditState extends State<Edit> {
       Icon(Icons.access_time, size: 24, color: AppColors.blue),
       SizedBox(width: 8),
       Text("Event Time", style: AppTextStyles.black16Medium),
-      Text(" ${selectedTime.hour}:${selectedTime.minute}"),
-      Spacer(),
+      const Spacer(),
       InkWell(
         onTap: () async {
-          selectedTime =
-              await showTimePicker(
-                context: context,
-                initialTime: selectedTime,
-              ) ??
-                  selectedTime;
-          setState(() {});
+          var time = await showTimePicker(
+            context: context,
+            initialTime: selectedTime,
+          );
+          if (time != null) {
+            setState(() {
+              selectedTime = time;
+            });
+          }
         },
         child: Text(
-          "Choose Time",
+          selectedTime.format(context),
           style: AppTextStyles.blue14Regular.copyWith(
             decoration: TextDecoration.underline,
           ),

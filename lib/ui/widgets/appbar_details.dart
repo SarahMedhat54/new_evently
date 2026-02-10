@@ -11,23 +11,24 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return AppBar(
-      backgroundColor: AppColors.offWhite,
-      title: Text("Event details", style: AppTextStyles.black20SemiBold),
+      backgroundColor: theme.scaffoldBackgroundColor,
+      title: Text("Event details", style: theme.textTheme.titleLarge?.copyWith(color: theme.primaryColor,),),
       leading: Padding(
         padding: EdgeInsets.all(8.0),
         child: Container(
           width: 80,
           height: 80,
           decoration: BoxDecoration(
-            color: AppColors.white,
             borderRadius: BorderRadius.circular(10),
+            border: Border.all(color: theme.primaryColor),
           ),
           child: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
-            icon: Icon(Icons.arrow_back_ios_new, color: AppColors.blue),
+            icon: Icon(Icons.arrow_back_ios_new, color: theme.primaryColor,),
           ),
         ),
       ),
@@ -36,14 +37,14 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
           width: 40,
           height: 40,
           decoration: BoxDecoration(
-            color: AppColors.white,
-            borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: theme.primaryColor)
           ),
           child: IconButton(
             onPressed: () {
               Navigator.push(context,MaterialPageRoute(builder: (context) => Edit(event: event),) );
             },
-            icon: Icon(Icons.mode_edit_sharp, color: AppColors.blue),
+            icon: Icon(Icons.mode_edit_sharp, color: theme.primaryColor,),
           ),
         ),
         SizedBox(width: 4),
@@ -53,12 +54,12 @@ class AppbarDetails extends StatelessWidget implements PreferredSizeWidget {
             width: 40,
             height: 40,
             decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: theme.primaryColor),
             ),
             child: IconButton(
               onPressed: () {},
-              icon: Icon(Icons.delete_outline, color: AppColors.red),
+              icon: Icon(Icons.delete_outline,color: AppColors.red,),
             ),
           ),
         ),
