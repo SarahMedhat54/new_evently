@@ -8,8 +8,6 @@ class EventDM {
   String title;
   String description;
   DateTime dateTime;
-  String imagePathDark;
-  String imagePathLight;
 
   EventDM({
     required this.id,
@@ -18,21 +16,20 @@ class EventDM {
     required this.dateTime,
     required this.title,
     required this.description,
-    required this.imagePathDark,
-    required this.imagePathLight,
   });
 
   static EventDM fromJson(Map<String, dynamic> json) {
-    Timestamp timeStamp = json["dateTime"];
+    // Safely handle the Firestore Timestamp
+    Timestamp? timeStamp = json["dateTime"] as Timestamp?;
+
     return EventDM(
-      id: json["id"],
-      ownerId: json["ownerId"],
-      categoryDM: CategoryDM.fromJson(json["category"]),
-      dateTime: timeStamp.toDate(),
-      title: json["title"],
-      description: json["description"],
-      imagePathDark: json["imagePathDark"] ,
-      imagePathLight: json["imagePathLight"] ,
+      id: json["id"] as String? ?? '',
+      ownerId: json["ownerId"] as String? ?? "",
+      // If "category" is missing in Firestore, we pass an empty map to CategoryDM
+      categoryDM: CategoryDM.fromJson(json["category"] as Map<String, dynamic>? ?? {}),
+      dateTime: timeStamp?.toDate() ?? DateTime.now(),
+      title: json["title"] as String? ?? "",
+      description: json["description"] as String? ?? "",
     );
   }
 
@@ -43,6 +40,7 @@ class EventDM {
       "category": categoryDM.toJson(),
       "title": title,
       "description": description,
+      "dateTime": dateTime, // Firestore SDK converts DateTime to Timestamp automatically
       "dateTime": dateTime,
       "imagePathDark": imagePathDark,
       "imagePathLight": imagePathLight,
@@ -53,6 +51,7 @@ class EventDM {
 class CategoryDM {
   String name;
   String imagePath;
+  String imageDarkPath;
   String imagePathLight;
   String imagePathDark;
   IconData icon;
@@ -60,14 +59,22 @@ class CategoryDM {
   CategoryDM({
     required this.name,
     required this.imagePath,
+    required this.imageDarkPath,
     required this.imagePathLight,
     required this.imagePathDark,
     required this.icon,
   });
 
   static CategoryDM fromJson(Map<String, dynamic> json) {
-    int codePoint = json["icon"];
     return CategoryDM(
+      name: json["name"] as String? ?? "Unknown",
+      imagePath: json["imagePath"] as String? ?? "",
+      imageDarkPath: json["imageDarkPath"] as String? ?? "",
+      // Provide a default icon (Icons.error) if the codePoint is missing
+      icon: IconData(
+        json["icon"] as int? ?? 0xe237,
+        fontFamily: 'MaterialIcons',
+      ),
       name: json["name"],
       imagePath: json["imagePath"] ?? "",
       imagePathLight: json["imagePathLight"] ?? json["imagePath"] ,
@@ -80,6 +87,11 @@ class CategoryDM {
     return {
       "name": name,
       "imagePath": imagePath,
+      "imageDarkPath": imageDarkPath,
+      "icon": icon.codePoint,
+    };
+  }
+}
       "imagePathLight": imagePathLight,
       "imagePathDark": imagePathDark,
       "icon": icon.codePoint,

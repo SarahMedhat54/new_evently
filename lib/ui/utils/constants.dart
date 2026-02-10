@@ -9,6 +9,7 @@ abstract final class AppConstants {
     imagePathLight: "",
     imagePathDark: "",
     icon: Icons.border_all_rounded,
+    imageDarkPath: '',
   );
 
   static CategoryDM sports = CategoryDM(
@@ -17,6 +18,7 @@ abstract final class AppConstants {
     imagePathLight: AppAssets.sportLight,
     imagePathDark: AppAssets.sportDark,
     icon: Icons.bike_scooter,
+    imageDarkPath: AppAssets.sportDark,
   );
 
   static CategoryDM bookingClub = CategoryDM(
@@ -25,6 +27,7 @@ abstract final class AppConstants {
     imagePathLight: AppAssets.bookClubLight,
     imagePathDark: AppAssets.bookClubDark,
     icon: Icons.menu_book,
+    imageDarkPath: AppAssets.bookClubDark,
   );
 
   static CategoryDM birthday = CategoryDM(
@@ -33,6 +36,7 @@ abstract final class AppConstants {
     imagePathLight: AppAssets.birthdayLight,
     imagePathDark: AppAssets.birthdayDark,
     icon: Icons.cake,
+    imageDarkPath: AppAssets.birthdayDark,
   );
 
   static CategoryDM meeting = CategoryDM(
@@ -41,6 +45,7 @@ abstract final class AppConstants {
     imagePathLight: AppAssets.meetingLight,
     imagePathDark: AppAssets.meetingDark,
     icon: Icons.meeting_room,
+    imageDarkPath: AppAssets.meetingDark,
   );
 
   static CategoryDM exhibition = CategoryDM(
@@ -49,6 +54,7 @@ abstract final class AppConstants {
     imagePathLight: AppAssets.exhibitionLight,
     imagePathDark: AppAssets.exhibitionDark,
     icon: Icons.access_time_filled_rounded,
+    imageDarkPath: AppAssets.exhibitionDark,
   );
 
   static List<CategoryDM> allCategories = [

@@ -16,12 +16,12 @@ class DetailsScreen extends StatefulWidget {
 }
 
 class _DetailsScreenState extends State<DetailsScreen> {
-
   CategoryDM event = AppConstants.customCategories[0];
 
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var isDark = Theme.of(context).brightness == Brightness.dark;
     String imageToShow = theme.brightness == Brightness.dark
         ? widget.event.imagePathDark
         : widget.event.imagePathLight;
@@ -43,6 +43,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
                   child: Image.asset(
+                    isDark
+                        ? widget.event.categoryDM.imageDarkPath
+                        : widget.event.categoryDM.imagePath,
                     imageToShow ,
                     width: double.infinity,
                     height: 200,

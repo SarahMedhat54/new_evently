@@ -16,6 +16,19 @@ abstract final class AppTheme {
       titleLarge: AppTextStyles.black20SemiBold,
       bodyMedium: AppTextStyles.black16Medium,
     ),
+
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        backgroundColor: AppColors.blue,
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(14)),
+        textStyle: AppTextStyles.white18Medium,
+      ),
+    ),
+  );
+
+
   );
 
   static ThemeData darkTheme = ThemeData(
@@ -25,6 +38,9 @@ abstract final class AppTheme {
 
     textTheme: TextTheme(
       titleLarge: AppTextStyles.black20SemiBold.copyWith(color: Colors.white),
+      bodyMedium: AppTextStyles.grey14Regular.copyWith(color: Colors.white),
+      labelMedium: TextStyle(color: AppColors.blue, fontSize: 16, fontWeight: FontWeight.bold),
+
       bodyMedium: AppTextStyles.black16Medium.copyWith(color: Colors.white),
       labelMedium: TextStyle(color: AppColors.blue, fontSize: 16, fontWeight: FontWeight.bold),
     ),

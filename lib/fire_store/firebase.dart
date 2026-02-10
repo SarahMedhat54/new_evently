@@ -26,23 +26,20 @@ Future<void> createEventInFirestore(EventDM event) async {
 }
 
 Stream<List<EventDM>> getEventsFromFirestore() {
-  CollectionReference eventsCollection = FirebaseFirestore.instance.collection(
-    "events",
-  );
-  // QuerySnapshot querySnapshot = await eventsCollection.get();
-  // return querySnapshot.docs.map((doc) {
-  //   var json = doc.data() as Map<String, dynamic>;
-  //   return EventDM.fromJson(json);
-  // }).toList();
-  Stream<QuerySnapshot> stream = eventsCollection.snapshots();
-  return stream.map((querySnapshot) {
+  CollectionReference eventsCollection = FirebaseFirestore.instance.collection("events");
+
+  return eventsCollection.snapshots().map((querySnapshot) {
     return querySnapshot.docs.map((doc) {
       var json = doc.data() as Map<String, dynamic>;
+
+      // IMPORTANT: Firestore doesn't put the Document ID inside the data map.
+      // We manually add it here so EventDM.id is actually the Firestore ID.
+      json["id"] = doc.id;
+
       return EventDM.fromJson(json);
     }).toList();
   });
 }
-
 addEventToFavorite(String eventId, UserDM user) {
   CollectionReference userCollection = FirebaseFirestore.instance.collection(
     UserDM.collectionName,

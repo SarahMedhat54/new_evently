@@ -1,10 +1,6 @@
 import 'package:evently_c17/provider/theme_provider.dart';
-import 'package:evently_c17/ui/screens/add_event/add_event_screen.dart';
-import 'package:evently_c17/ui/screens/details/details_screen.dart';
 import 'package:evently_c17/ui/screens/login/login_screen.dart';
-import 'package:evently_c17/ui/screens/navigation/navigation_screen.dart';
 import 'package:evently_c17/ui/screens/onboarding_screen/onboarding.dart';
-import 'package:evently_c17/ui/screens/splash_screen/splash.dart';
 import 'package:evently_c17/ui/utils/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -51,8 +47,8 @@ class _MyAppState extends State<MyApp> {
       },
       // initialRoute: Onboarding.id,
       debugShowCheckedModeBanner: false,
-      //home:  Splash(),
-      home:LoginScreen(),
+      home:  Onboarding(),
+     // home:LoginScreen(),
       localizationsDelegates: [
         AppLocalizations.delegate,
         GlobalMaterialLocalizations.delegate,
