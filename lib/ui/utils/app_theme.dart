@@ -6,15 +6,25 @@ import 'app_styles.dart';
 abstract final class AppTheme {
   static ThemeData lightTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.offWhite,
+    colorScheme: ColorScheme.light(
+      outline: AppColors.white,
+      onSecondary: AppColors.blue
+    ),
     primaryColor: AppColors.blue,
     cardColor: Colors.white,
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.offWhite,
+      iconTheme: IconThemeData(color: AppColors.blue),
+      titleTextStyle: TextStyle(color: Colors.white, fontSize: 16),
       centerTitle: true,
     ),
     textTheme: TextTheme(
-      titleLarge: AppTextStyles.black20SemiBold,
+      titleLarge: AppTextStyles.black16Medium,
       bodyMedium: AppTextStyles.black16Medium,
+      bodySmall: AppTextStyles.grey212Regular,
+      labelMedium: AppTextStyles.black20SemiBold,
+      labelSmall: AppTextStyles.blue14Medium,
+      //bodyLarge:
     ),
 
     elevatedButtonTheme: ElevatedButtonThemeData(
@@ -26,18 +36,29 @@ abstract final class AppTheme {
         textStyle: AppTextStyles.white18Medium,
       ),
     ),
+
+
+
   );
 
 
   static ThemeData darkTheme = ThemeData(
     scaffoldBackgroundColor: AppColors.darkBlue,
-    primaryColor: AppColors.blue,
+    colorScheme: ColorScheme.dark(
+      outline: AppColors.blue,
+        onSecondary: AppColors.white
+
+    ),
+    primaryColor: AppColors.lightBlue,
     cardColor: Colors.transparent,
 
+
     textTheme: TextTheme(
-      titleLarge: AppTextStyles.black20SemiBold.copyWith(color: Colors.white),
+      titleLarge: AppTextStyles.white14Medium,
       bodyMedium: AppTextStyles.grey14Regular.copyWith(color: Colors.white),
-      labelMedium: TextStyle(color: AppColors.blue, fontSize: 16, fontWeight: FontWeight.bold),
+      labelMedium: TextStyle(color: AppColors.lightBlue, fontSize: 16, fontWeight: FontWeight.bold),
+      bodySmall: AppTextStyles.white14Medium ,
+      labelSmall: AppTextStyles.white18Medium,
 
     ),
 

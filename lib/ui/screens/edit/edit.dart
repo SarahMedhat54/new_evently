@@ -37,31 +37,38 @@ class _EditState extends State<Edit> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+    var isDark = Theme.of(context).brightness == Brightness.dark;
+
+
     return Scaffold(
-      backgroundColor: AppColors.offWhite,
+      backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppBar(
         leading: Padding(
-          padding: EdgeInsets.all(16),
+          padding: EdgeInsets.all(8),
           child: Container(
+            width: 80,
+            height: 80,
             decoration: BoxDecoration(
-              color: AppColors.white,
-              borderRadius: BorderRadius.circular(6),
-            ),
+              color: theme.cardColor,
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color:theme.colorScheme.outline),          ),
             child: IconButton(
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: Icon(Icons.arrow_back_ios_new, color: AppColors.blue),
+              icon: Icon(Icons.arrow_back_ios_new, color:theme.colorScheme.onSecondary),
             ),
           ),
         ),
-        title: Text("Edit Event", style: AppTextStyles.black16Medium),
+        title: Text("Edit Event", style: theme.textTheme.titleLarge),
         centerTitle: true,
       ),
       body: Padding(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Expanded(
               child: SingleChildScrollView(
@@ -86,42 +93,51 @@ class _EditState extends State<Edit> {
                       },
                     ),
                     SizedBox(height: 18),
-                    Text("Title", style: AppTextStyles.black16Medium),
+                    Text("Title", style:theme.textTheme.titleLarge),
                     const SizedBox(height: 8),
                     AppTextField(
                       controller: titleController,
                       hint: "Event Title",
                     ),
                     SizedBox(height: 18),
-                    Text("Description", style: AppTextStyles.black16Medium),
+                    Text("Description", style: theme.textTheme.titleLarge),
                     const SizedBox(height: 8),
-                    AppTextField(
-                      controller: descriptionController,
-                      hint: "Event Description",
-                     // maxLines: 4,
-                    ),
+                    // Container(
+                    //   height: 200,
+                    //   width: double.infinity,
+                    //   decoration: BoxDecoration(
+                    //     color: theme.cardColor,
+                    //     borderRadius: BorderRadius.circular(16),
+                    //     border: Border.all(color:theme.colorScheme.outline),
+                    //   ),
+                    //   child:
+                      AppTextField(
+                        controller: descriptionController,
+                        hint: "Event Description",
+                       // maxLines: 4,
+                      ),
                     const SizedBox(height: 18),
-                    buildChooseDateRow(),
+                    buildChooseDateRow(theme),
                     const SizedBox(height: 10),
-                    buildChooseTimeRow(),
+                    buildChooseTimeRow(theme),
                     const SizedBox(height: 20),
                     //AppTextField(hint: )
                   ],
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                updateEvent();
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.blue,
-                minimumSize: const Size(double.infinity, 56),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
+            Row(
+              children: [
+                Expanded(
+                  child: ElevatedButton(
+                    onPressed: () {
+                      updateEvent();
+                    },
+                    //style: theme.elevatedButtonTheme,
+                    child: Text("Update Event", style: AppTextStyles.white18Medium),
+                  ),
                 ),
-              ),
-              child: Text("Update Event", style: AppTextStyles.white18Medium),
+              ],
             ),
           ],
         ),
@@ -146,11 +162,11 @@ class _EditState extends State<Edit> {
     if (mounted) Navigator.pop(context);
   }
 
-  buildChooseDateRow() => Row(
+   Widget buildChooseDateRow(ThemeData theme) => Row(
     children: [
       Icon(Icons.calendar_month, size: 24, color: AppColors.blue),
       SizedBox(width: 8),
-      Text("Event Date", style: AppTextStyles.black16Medium),
+      Text("Event Date", style: theme.textTheme.titleLarge),
       Text("${selectedDate.day}/${selectedDate.month}/${selectedDate.year}"),
       Spacer(),
       InkWell(
@@ -175,11 +191,11 @@ class _EditState extends State<Edit> {
     ],
   );
 
-  buildChooseTimeRow() => Row(
+  Widget  buildChooseTimeRow(ThemeData theme) => Row(
     children: [
       Icon(Icons.access_time, size: 24, color: AppColors.blue),
       SizedBox(width: 8),
-      Text("Event Time", style: AppTextStyles.black16Medium),
+      Text("Event Time", style: theme.textTheme.titleLarge),
       Text(" ${selectedTime.hour}:${selectedTime.minute}"),
       Spacer(),
       InkWell(

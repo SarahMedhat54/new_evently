@@ -23,12 +23,13 @@ class AppTextField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    Color borderColor = theme.colorScheme.outline;
     var isDark = theme.brightness == Brightness.dark;
 
     var border = OutlineInputBorder(
       borderRadius: BorderRadius.circular(16),
       borderSide: BorderSide(
-        color: isDark ? AppColors.lightGrey : AppColors.blue,
+        color: borderColor,
         width: 1,
       ),
     );
@@ -38,8 +39,7 @@ class AppTextField extends StatelessWidget {
       minLines: minLines ?? 1,
       maxLines: isPassword ? 1 : (minLines ?? 1),
       obscureText: isPassword,
-      style: TextStyle(color: isDark ? Colors.black : Colors.white),
-
+      style:theme.textTheme.labelSmall ,
       decoration: InputDecoration(
         suffixIcon: suffixIcon != null
             ? Padding(padding: const EdgeInsets.symmetric(horizontal: 12), child: suffixIcon)
@@ -59,7 +59,7 @@ class AppTextField extends StatelessWidget {
         ),
         enabledBorder: border,
         filled: true,
-        fillColor: isDark ?AppColors.white : Colors.transparent,
+        fillColor: theme.cardColor,
         suffixIconConstraints: const BoxConstraints(minHeight: 24, minWidth: 48),
         prefixIconConstraints: const BoxConstraints(minHeight: 24, minWidth: 48),
       ),

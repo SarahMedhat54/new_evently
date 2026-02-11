@@ -22,6 +22,8 @@ class _CategoriesTabBarState extends State<CategoriesTabBar> {
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
+
     // for(var category in categories){
     //   tabs.add(value)
     // }
@@ -43,13 +45,16 @@ class _CategoriesTabBarState extends State<CategoriesTabBar> {
   }
 
   Widget mapCategoryToWidget(CategoryDM category) {
+    var theme = Theme.of(context);
     bool isSelected = selectedIndex == widget.categories.indexOf(category);
     return Container(
       padding: EdgeInsets.symmetric(vertical: 12, horizontal: 16),
       decoration: BoxDecoration(
-        color: isSelected ? AppColors.blue: AppColors.white,
+        color: isSelected ? theme.primaryColor: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
-      ),
+        border: Border.all(color:theme.colorScheme.outline),
+
+    ),
       child: Row(
         children: [
           Icon(
@@ -60,7 +65,7 @@ class _CategoriesTabBarState extends State<CategoriesTabBar> {
           Text(
             category.name,
             style: AppTextStyles.white18Medium.copyWith(
-              color: isSelected ? AppColors.white : AppColors.blue,
+              color: isSelected ? AppColors.white : AppColors.white,
             ),
           ),
         ],

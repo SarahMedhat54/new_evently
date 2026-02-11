@@ -26,7 +26,9 @@ class EventDM {
       id: json["id"] as String? ?? '',
       ownerId: json["ownerId"] as String? ?? "",
       // If "category" is missing in Firestore, we pass an empty map to CategoryDM
-      categoryDM: CategoryDM.fromJson(json["category"] as Map<String, dynamic>? ?? {}),
+      categoryDM: CategoryDM.fromJson(
+        json["category"] as Map<String, dynamic>? ?? {},
+      ),
       dateTime: timeStamp?.toDate() ?? DateTime.now(),
       title: json["title"] as String? ?? "",
       description: json["description"] as String? ?? "",
@@ -40,7 +42,8 @@ class EventDM {
       "category": categoryDM.toJson(),
       "title": title,
       "description": description,
-      "dateTime": dateTime, // Firestore SDK converts DateTime to Timestamp automatically
+      "dateTime": dateTime,
+      // Firestore SDK converts DateTime to Timestamp automatically
     };
   }
 }

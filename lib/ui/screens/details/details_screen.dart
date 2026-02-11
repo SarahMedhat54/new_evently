@@ -4,6 +4,7 @@ import 'package:evently_c17/model/event_dm.dart';
 import 'package:evently_c17/ui/widgets/times_details_container.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import '../../utils/app_colors.dart';
 import '../../utils/constants.dart';
 import '../../widgets/appbar_details.dart';
 
@@ -24,6 +25,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
     var isDark = Theme.of(context).brightness == Brightness.dark;
+
     return Scaffold(
       backgroundColor: theme.scaffoldBackgroundColor,
       appBar: AppbarDetails(event: widget.event),
@@ -36,7 +38,7 @@ class _DetailsScreenState extends State<DetailsScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: theme.primaryColor),
+                  border: Border.all(color:theme.colorScheme.outline),
                 ),
                 child: ClipRRect(
                   borderRadius: BorderRadius.circular(16),
@@ -53,8 +55,10 @@ class _DetailsScreenState extends State<DetailsScreen> {
               SizedBox(height: 20),
               Container(
                 decoration:  BoxDecoration(
+                  color: theme.cardColor,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: theme.primaryColor),                ),
+                  border: Border.all(color: theme.colorScheme.outline),
+                ),
                 child: TimesDetailsContainer(
                   title: DateFormat('d MMMM').format(widget.event.dateTime),
                   subTitle: DateFormat('hh:mm a').format(widget.event.dateTime),
@@ -67,8 +71,9 @@ class _DetailsScreenState extends State<DetailsScreen> {
                 height: 200,
                 width: double.infinity,
                 decoration: BoxDecoration(
+                  color: theme.cardColor,
                   borderRadius: BorderRadius.circular(16),
-                  border: Border.all(color: theme.primaryColor),
+                  border: Border.all(color:theme.colorScheme.outline),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),

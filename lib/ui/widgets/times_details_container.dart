@@ -10,11 +10,14 @@ class TimesDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    var isDark = theme.brightness == Brightness.dark;
+    Color bordertColor = isDark ? theme.primaryColor : AppColors.white;
     return  Container(
       padding:  EdgeInsets.all(12),
       decoration: BoxDecoration(
+        color: theme.cardColor,
         borderRadius: BorderRadius.circular(16),
-        border: Border.all(color: theme.primaryColor),
+        border: Border.all(color:bordertColor),
         // border: Border.all(color: AppColors.blue, width: 1)
       ),
       child: Row(
@@ -23,10 +26,10 @@ class TimesDetailsContainer extends StatelessWidget {
             padding: EdgeInsets.all(8),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: theme.primaryColor.withOpacity(0.1),
-              border: Border.all(color: theme.primaryColor),
+              color: theme.cardColor,
+              border: Border.all(color:bordertColor),
             ),
-            child: Icon(Icons.calendar_month,color: theme.primaryColor,),
+            child: Icon(Icons.calendar_month_outlined,color: theme.primaryColor,),
           ),
           SizedBox(width: 8,),
           Expanded(
@@ -34,21 +37,12 @@ class TimesDetailsContainer extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text(title, style: theme.textTheme.titleLarge?.copyWith(
-                  fontSize: 16,
-                  color: theme.primaryColor,
-                  fontWeight: FontWeight.bold,
-                ),
+                Text(title, style: theme.textTheme.labelMedium
                 ),
                 //SizedBox(height: 4,),
                 Text(
                   subTitle,
-                  style: theme.textTheme.bodyMedium?.copyWith(
-                    color: theme.brightness == Brightness.dark
-                        ? Colors.grey[400]
-                        : AppColors.grey2,
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: theme.textTheme.bodySmall
                 )
               ],
             ),
